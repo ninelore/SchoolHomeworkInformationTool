@@ -9,6 +9,18 @@ $danger: #FF5555;
 
 $enable-shadows: true;
 
+// Custom CSS
+
+.no-link-deco {
+  text-decoration: none !important;
+  color: black;
+}
+
+button {
+  border: none;
+  background: none;
+}
+
 // IMPORTS
 // Bootstrap
 @import "../node_modules/bootstrap/scss/bootstrap";
@@ -17,3 +29,9 @@ $enable-shadows: true;
 @import "../node_modules/@fortawesome/fontawesome-free/scss/brands";
 @import "../node_modules/@fortawesome/fontawesome-free/scss/regular";
 @import "../node_modules/@fortawesome/fontawesome-free/scss/solid";
+
+/* Importing Bootstrap SCSS file. */
+@import 'bootstrap/scss/bootstrap';
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

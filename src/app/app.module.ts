@@ -8,6 +8,8 @@ import { TestComponent } from './views/test/test.component';
 import { EventDisplayComponent } from './components/event-display/event-display.component';
 import { LoginComponent } from './views/login/login.component';
 import { EventFormComponent } from './views/event-form/event-form.component';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import {MatExpansionModule} from "@angular/material/expansion";
 
 @NgModule({
   declarations: [
@@ -25,7 +27,9 @@ import { EventFormComponent } from './views/event-form/event-form.component';
       {path: "login", component: LoginComponent},
       {path: "list", component: OverviewComponent},
       {path: "form", component: EventFormComponent}
-    ])
+    ]),
+    NoopAnimationsModule,
+    MatExpansionModule
   ],
   providers: [],
   bootstrap: [AppComponent]
