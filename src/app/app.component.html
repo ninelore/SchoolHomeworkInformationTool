@@ -1,10 +1,28 @@
-<nav class="m-3">
-    <a class="button" routerLink="/list">Go to overview Component</a>
-    <a class="button" routerLink="/test">Go to test Component</a>
-</nav>
+<div class="btn-group">
+  <button class="mx-2 mt-3 fs-2" data-bs-toggle="collapse" data-bs-target="#shitNavMenu">
+    <i class="fa fa-bars"></i>
+  </button>
+  <a class="no-link-deco pt-3" routerLink="/">
+    <h1>💩 S.H.I.T.</h1>
+  </a>
 
-<h1 class="text-center">💩 S.H.I.T.</h1>
+  <div class="collapse" id="shitNavMenu">
+    <div class="row m-3 align-items-center">
+      <ng-container class="" *ngFor="let item of menuItems | keyvalue">
+        <div class="col-auto">
+          <a class="btn no-link-deco mx-1" routerLink="/{{item.key}}">{{item.value}}</a>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>
+<div>
+  <mat-expansion-panel hideToggle>
+    <mat-expansion-panel-header></mat-expansion-panel-header>
+    <p>This is the primary content of the panel.</p>
+  </mat-expansion-panel>
+</div>
 
 <div class="m-3">
-    <router-outlet></router-outlet>
+  <router-outlet></router-outlet>
 </div>
