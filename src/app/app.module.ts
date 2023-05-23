@@ -7,6 +7,7 @@ import { OverviewComponent } from './views/overview/overview.component';
 import { TestComponent } from './test/test.component';
 import { EventDisplayComponent } from './components/event-display/event-display.component';
 import { LoginComponent } from './login/login.component';
+import { EventFormComponent } from './views/event-form/event-form.component';
 
 @NgModule({
   declarations: [
@@ -14,14 +15,16 @@ import { LoginComponent } from './login/login.component';
     OverviewComponent,
     LoginComponent,
     TestComponent,
-    EventDisplayComponent
+    EventDisplayComponent,
+    EventFormComponent
   ],
   imports: [
     BrowserModule,
     RouterModule.forRoot([
       {path: "test", component: TestComponent},
       {path: "login", component: LoginComponent},
-      {path:"list", component: OverviewComponent}
+      {path:"list", component: OverviewComponent},
+      {path: "form", component: EventFormComponent}
     ])
   ],
   providers: [],
