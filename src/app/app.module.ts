@@ -4,9 +4,9 @@ import { RouterModule} from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { OverviewComponent } from './views/overview/overview.component';
-import { TestComponent } from './test/test.component';
+import { TestComponent } from './views/test/test.component';
 import { EventDisplayComponent } from './components/event-display/event-display.component';
-import { LoginComponent } from './login/login.component';
+import { LoginComponent } from './views/login/login.component';
 import { EventFormComponent } from './views/event-form/event-form.component';
 
 @NgModule({
@@ -23,7 +23,7 @@ import { EventFormComponent } from './views/event-form/event-form.component';
     RouterModule.forRoot([
       {path: "test", component: TestComponent},
       {path: "login", component: LoginComponent},
-      {path:"list", component: OverviewComponent},
+      {path: "list", component: OverviewComponent},
       {path: "form", component: EventFormComponent}
     ])
   ],
