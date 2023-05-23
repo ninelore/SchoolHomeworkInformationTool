@@ -1,14 +1,18 @@
 /* You can add global styles to this file, and also import other style files */
 
-// Variable overrides first
-$primary: #900;
+// Bootstrap Variables
+$primary: #00FF77;
+$secondary: #00FFAA;
+$info: #00FFFF;
+$warning: #FFFF00;
+$danger: #FF5555;
+
 $enable-shadows: true;
-$prefix: "mo-";
-//$
 
-// Then import Bootstrap
+// IMPORTS
+// Bootstrap
 @import "../node_modules/bootstrap/scss/bootstrap";
-
+// Font Awesome
 @import "../node_modules/@fortawesome/fontawesome-free/scss/fontawesome";
 @import "../node_modules/@fortawesome/fontawesome-free/scss/brands";
 @import "../node_modules/@fortawesome/fontawesome-free/scss/regular";
