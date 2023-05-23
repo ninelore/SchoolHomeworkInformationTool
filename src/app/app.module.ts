@@ -4,19 +4,16 @@ import { RouterModule} from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { TestComponent } from './test/test.component';
-import { AngularComponent } from './angular/angular.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    TestComponent,
-    AngularComponent
+    TestComponent
   ],
   imports: [
     BrowserModule,
     RouterModule.forRoot([
-      {path: "test", component: TestComponent},
-      {path: "angular", component: AngularComponent},
+      {path: "test", component: TestComponent}
     ])
   ],
   providers: [],
