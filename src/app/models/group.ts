@@ -1,4 +1,4 @@
-export class Group {
+export interface Group {
     id: number;
     name: string;
     discordGuidId: number;

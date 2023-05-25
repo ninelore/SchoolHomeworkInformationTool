@@ -1,4 +1,4 @@
-export class ShitEvent {
+export interface ShitEvent {
     id?: number;
     name?: string;
     groupId?: number;
