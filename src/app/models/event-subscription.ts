@@ -1,6 +1,6 @@
-export class EventSubscription {
+export interface EventSubscription {
     id: number;
     userId: number;
     eventId: number;
-    reminder: string; // TODO is string correct
+    reminder: string; // TODO: Refactor to Duration
 }
