@@ -1,12 +1,5 @@
 @use '@angular/material' as mat;
 
-@import "bootstrap/scss/functions";
-@import "bootstrap/scss/variables";
-@import "bootstrap/scss/variables-dark";
-@import "bootstrap/scss/maps";
-@import "bootstrap/scss/mixins";
-@import "bootstrap/scss/utilities";
-
 @include mat.core();
 
 ////////////////////
@@ -17,11 +10,19 @@ $my-primary: mat.define-palette(mat.$grey-palette, 800);
 $my-accent: mat.define-palette(mat.$indigo-palette, 900, 800);
 $my-warn: mat.define-palette(mat.$red-palette);
 
-$primary: $indigo;
-$secondary: $teal;
+$primary: #424242;
+$secondary: #EEEEEE;
+$border-color: $secondary;
+$card-border-color: $secondary;
+
+$theme-colors: (
+  "primary": $primary,
+  "secondary": $secondary
+);
 
 $body-bg: #212121;
 $body-color: #FFF;
+
 
 $enable-shadows: true;
 
@@ -66,7 +67,8 @@ $my-theme: mat.define-dark-theme((
 @include mat.all-component-themes($my-theme);
 
 // Final Imports
-@import "bootstrap/scss/bootstrap";
+@import "../node_modules/bootstrap/scss/bootstrap";
+
 @import "@fortawesome/fontawesome-free/scss/fontawesome";
 @import "@fortawesome/fontawesome-free/scss/brands";
 @import "@fortawesome/fontawesome-free/scss/regular";
