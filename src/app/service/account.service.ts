@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AccountService {
   private userId: number | null = null;
-  constructor() { }
+  constructor(
+    private http: HttpClient
+  ) { }
 
   isLoggedIn(): boolean {
     return this.userId != null;

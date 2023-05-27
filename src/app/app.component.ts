@@ -25,7 +25,7 @@ export class AppComponent implements OnInit {
 
   isLoggedIn(): boolean {
     //return this.accountService.isLoggedIn();
-    return true;
+    return false;
   }
 
   getLoginLink(): string {
