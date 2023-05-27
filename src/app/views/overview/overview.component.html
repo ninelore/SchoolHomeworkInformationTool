@@ -1,11 +1,30 @@
-<!doctype html>
-<div class="input-group mb-2">
-    <input class="form-control" type="text" placeholder="Search">
-    <button type="button" class="btn btn-outline-secondary">Search</button>
-    <button type="button" class="btn btn-outline-secondary">Refresh</button>
-    <button type="button" class="btn btn-outline-secondary">Create New</button>
+<div class="d-flex gap-2">
+    <div class="input-group flex-grow-1">
+        <input class="form-control" type="text" placeholder="Search" (input)="search($event)">
+        <select class="form-select " name="sort" id="sort-events" (change)="changeSortMode($event)">
+            <option value="name">Sort by name</option>
+            <option value="nameR">Sort by name (reverse)</option>
+
+            <option value="date" selected>Sort by date</option>
+            <option value="dateR">Sort by date (reverse)</option>
+
+        </select>
+        <button class="btn btn-outline-secondary">Refresh</button>
+
+    </div>
+
+    <div class="input-group flex-shrink-1">
+        <a class="btn btn-primary" routerLink="/form" [queryParams]="{mode:'create'}">Create New</a>
+    </div>
 </div>
 
 <div class="d-flex pt-2 gap-3">
-    <app-event-display *ngFor="let event of events" [name]="event.name??'No Name'" [description]="event.description??'No desc'"></app-event-display>
+
+    <app-event-display *ngFor="let event of events" [event]="event"></app-event-display>
+
+
+    <!-- the following event-displays are only for layout variants testing -->
+    <app-event-display *ngFor="let event of events" [event]="event" [created]="true" ></app-event-display>
+    <app-event-display *ngFor="let event of events" [event]="event" [subscribed]="true"></app-event-display>
+
 </div>

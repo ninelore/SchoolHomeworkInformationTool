@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { ShitEvent } from 'src/app/models/shit-event';
 
 @Component({
   selector: 'app-event-display',
@@ -6,7 +7,7 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./event-display.component.scss']
 })
 export class EventDisplayComponent {
-  @Input() public name?: string;
-  @Input() public description?: string;
-  @Input() public date?: Date;
+  @Input() public event?: ShitEvent;
+  @Input() public created: boolean = false;
+  @Input() public subscribed: boolean = false;
 }
