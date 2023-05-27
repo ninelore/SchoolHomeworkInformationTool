@@ -10,10 +10,10 @@ $my-primary: mat.define-palette(mat.$grey-palette, 800);
 $my-accent: mat.define-palette(mat.$indigo-palette, 900, 800);
 $my-warn: mat.define-palette(mat.$red-palette);
 
-$primary: #9E9E9E;
-$secondary: #EEEEEE;
-$border-color: $secondary;
-$card-border-color: $secondary;
+$primary: #E0E0E0;
+$secondary: #424242;
+$border-color: $primary;
+$card-border-color: $primary;
 
 $theme-colors: (
   "primary": $primary,
