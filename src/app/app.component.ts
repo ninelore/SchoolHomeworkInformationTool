@@ -1,26 +1,34 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {AccountService} from "./service/account.service";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
+  menuItems = new Map<String, String>([
+    ["list", "Overview"],
+    ["test", "Test"]
+  ]);
 
-  _menuItems: Map<String, String>;
+  constructor(
+    private accountService: AccountService
+  ) { }
 
-  constructor() {
-    this._menuItems = new Map<String, String>();
-    // Menu items
-    this._menuItems.set("list", "Overview");
-    this._menuItems.set("test", "Test");
+  ngOnInit() {
+    const code = new URLSearchParams(window.location.search).get("code");
+    if (code != null) {
+      //accountService.login // TBD
+    }
   }
 
   isLoggedIn(): boolean {
+    //return this.accountService.isLoggedIn();
     return true;
   }
 
-  get menuItems(): Map<String, String> {
-    return this._menuItems;
+  getLoginLink(): string {
+    return this.accountService.generateLoginLink();
   }
 }
