@@ -10,6 +10,8 @@ import { LoginComponent } from './views/login/login.component';
 import { EventFormComponent } from './views/event-form/event-form.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import {MatExpansionModule} from "@angular/material/expansion";
+import {CdkAccordionModule} from "@angular/cdk/accordion";
+import {MatToolbarModule} from "@angular/material/toolbar";
 
 @NgModule({
   declarations: [
@@ -29,7 +31,9 @@ import {MatExpansionModule} from "@angular/material/expansion";
       {path: "form", component: EventFormComponent}
     ]),
     NoopAnimationsModule,
-    MatExpansionModule
+    MatExpansionModule,
+    CdkAccordionModule,
+    MatToolbarModule
   ],
   providers: [],
   bootstrap: [AppComponent]
