@@ -1,19 +1,38 @@
-/* You can add global styles to this file, and also import other style files */
+@use '@angular/material' as mat;
 
-// Bootstrap Variables
-$primary: #00FF77;
-$secondary: #00FFAA;
-$info: #00FFFF;
-$warning: #FFFF00;
-$danger: #FF5555;
+@include mat.core();
+
+////////////////////
+/* ONLY EDIT HERE */
+////////////////////
+
+$my-primary: mat.define-palette(mat.$grey-palette, 800);
+$my-accent: mat.define-palette(mat.$indigo-palette, 900, 800);
+$my-warn: mat.define-palette(mat.$red-palette);
+
+$primary: #424242;
+$secondary: #EEEEEE;
+$border-color: $secondary;
+$card-border-color: $secondary;
+
+$theme-colors: (
+  "primary": $primary,
+  "secondary": $secondary
+);
+
+$body-bg: #212121;
+$body-color: #FFF;
+
 
 $enable-shadows: true;
 
-// Custom CSS
+fa {
+  color: inherit;
+}
 
 .no-link-deco {
   text-decoration: none !important;
-  color: black;
+  color: inherit;
 }
 
 button {
@@ -21,17 +40,36 @@ button {
   background: none;
 }
 
-// IMPORTS
-// Bootstrap
+html, body {
+  text-decoration-color: $body-color;
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+/////////////////////
+/*  EDIT AREA END  */
+/////////////////////
+
+// Angular Material definition
+$my-theme: mat.define-dark-theme((
+  color: (
+    primary: $my-primary,
+    accent: $my-accent,
+    warn: $my-warn,
+  ),
+  typography: mat.define-typography-config(),
+  density: 0,
+));
+@include mat.all-component-themes($my-theme);
+
+// Final Imports
 @import "../node_modules/bootstrap/scss/bootstrap";
-// Font Awesome
-@import "../node_modules/@fortawesome/fontawesome-free/scss/fontawesome";
-@import "../node_modules/@fortawesome/fontawesome-free/scss/brands";
-@import "../node_modules/@fortawesome/fontawesome-free/scss/regular";
-@import "../node_modules/@fortawesome/fontawesome-free/scss/solid";
 
-/* Importing Bootstrap SCSS file. */
-@import 'bootstrap/scss/bootstrap';
-
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+@import "@fortawesome/fontawesome-free/scss/fontawesome";
+@import "@fortawesome/fontawesome-free/scss/brands";
+@import "@fortawesome/fontawesome-free/scss/regular";
+@import "@fortawesome/fontawesome-free/scss/solid";
