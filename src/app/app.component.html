@@ -1,26 +1,24 @@
 <!doctype html>
 <div class="row">
   <mat-toolbar color="primary">
-    <div>
-      <mat-toolbar-row>
-        <button type="button" [disabled]="!isLoggedIn()" class="fs-2 mx-3" data-bs-toggle="collapse" data-bs-target="#header-collapse">
-          <i class="fa fa-bars"></i>
-        </button>
-        <a class="no-link-deco" routerLink="/">
-          <h1 class="fs-2">💩 S.H.I.T.</h1>
-        </a>
-      </mat-toolbar-row>
-    </div>
 
-    <div class="collapse" id="header-collapse">
-      <mat-toolbar-row *ngIf="isLoggedIn()">
-        <ng-container *ngFor="let item of menuItems | keyvalue">
-          <div class="col-auto mx-5">
-            <a class="no-link-deco fs-5" routerLink="/{{item.key}}">{{item.value}}</a>
-          </div>
-        </ng-container>
-      </mat-toolbar-row>
-    </div>
+    <mat-toolbar-row class="col-12">
+      <button type="button" [disabled]="!isLoggedIn()" class="fs-2 mx-3" data-bs-toggle="collapse"
+        data-bs-target="#header-collapse">
+        <i class="fa fa-bars"></i>
+      </button>
+      <a class="no-link-deco" routerLink="/">
+        <h1 class="fs-2">💩 S.H.I.T.</h1>
+      </a>
+    </mat-toolbar-row>
+
+    <mat-toolbar-row class="col-12 collapse" id="header-collapse" *ngIf="isLoggedIn()">
+      <ng-container class="row" *ngFor="let item of menuItems | keyvalue">
+        <div class="col-auto mx-5">
+          <a class="no-link-deco fs-5" routerLink="/{{item.key}}">{{item.value}}</a>
+        </div>
+      </ng-container>
+    </mat-toolbar-row>
   </mat-toolbar>
 
 </div>
@@ -34,8 +32,8 @@
 <ng-container *ngIf="!isLoggedIn()">
   <div class="row mt-5">
     <div class="col-12 offset-md-3 col-md-6 d-grid">
-      <a class="btn btn-outline-secondary py-4 fs-1" href="{{getLoginLink()}}"><i class="fa-brands fa-discord"></i> Login with Discord</a>
+      <a class="btn btn-outline-secondary py-4 fs-1" href="{{getLoginLink()}}"><i class="fa-brands fa-discord"></i>
+        Login with Discord</a>
     </div>
   </div>
 </ng-container>
-
