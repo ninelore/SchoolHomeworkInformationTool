@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { ShitEvent } from 'src/app/models/shit-event';
+import { HttpClientService } from 'src/app/service/http-client.service';
+import { FakeHttpClientService } from 'src/app/service/fake-http-client.service';
 
 @Component({
   selector: 'app-overview',
@@ -7,7 +9,18 @@ import { ShitEvent } from 'src/app/models/shit-event';
   styleUrls: ['./overview.component.scss']
 })
 export class OverviewComponent {
-  search(event: Event) {
+
+  public refresh() {
+      this.backend.getEvents().subscribe(
+        events => this.events = events
+      )
+  }
+
+  constructor(private backend:FakeHttpClientService ) { 
+    this.refresh();
+  }
+
+  public search(event: Event) {
     const value = (event.target as HTMLInputElement).value ?? "";
 
     this.textFilter = value;
@@ -15,7 +28,7 @@ export class OverviewComponent {
 
   }
 
-  updateShownEvents() {
+  public updateShownEvents() {
     const filtred = this.events.sort((a, b) => {
       if (this.sortMode === "date") {
         return (a.date ?? new Date("1970-01-01")) > (b.date ?? new Date("1970-01-01")) ? 1 : 0
@@ -24,10 +37,10 @@ export class OverviewComponent {
       if (this.sortMode === "dateR") {
         return (a.date ?? new Date("1970-01-01")) <= (b.date ?? new Date("1970-01-01")) ? 1 : 0
       }
-      if( this.sortMode === "name"){
+      if (this.sortMode === "name") {
         return (a.name ?? "").localeCompare(b.name ?? "")
       }
-      if( this.sortMode === "nameR"){
+      if (this.sortMode === "nameR") {
         return (b.name ?? "").localeCompare(a.name ?? "")
       }
       return 0
@@ -39,27 +52,14 @@ export class OverviewComponent {
     }
   }
 
-  changeSortMode(event: Event) {
+  public changeSortMode(event: Event) {
     const value = (event.target as HTMLSelectElement).value ?? "date";
 
     this.sortMode = value;
     this.updateShownEvents()
 
   }
-  events: ShitEvent[] = [
-    {
-      id: 0,
-      name: "Event 1",
-      description: "Description 1",
-      date: new Date("2023-05-30")
-    },
-    {
-      id: 1,
-      name: "Event 2",
-      description: "Description 2",
-      date: new Date("2023-06-27")
-    }
-  ]
+  events: ShitEvent[] = [];
   shownEvents: ShitEvent[] = this.events;
   sortMode: string = "date"; // TODO maybe change to enum
   textFilter: string = ""
