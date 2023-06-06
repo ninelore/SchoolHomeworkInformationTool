@@ -10,4 +10,6 @@ export class EventDisplayComponent {
   @Input() public event?: ShitEvent;
   @Input() public created: boolean = false;
   @Input() public subscribed: boolean = false;
+  @Input() public subscribe: () => void = () => { };
+  @Input() public editSubscription: () => void = () => { };
 }

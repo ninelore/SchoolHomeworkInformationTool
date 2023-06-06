@@ -25,7 +25,7 @@ export class HttpClientService implements HttpClientInterface {
     return this.http.post<C>(url, data)
   }
 
-  public subscribe(eventId: string, reminderAmount: number, reminderUnit: string): Observable<ShitServerResponse> {
+  public subscribe(eventId: number, reminderAmount: number, reminderUnit: string): Observable<ShitServerResponse> {
     const user = this.accountService.getUser();
 
     if (!user) {
@@ -52,11 +52,34 @@ export class HttpClientService implements HttpClientInterface {
     return this.get<ShitEvent[]>(HttpClientService.eventsUrl);
   }
 
-  public createEvent(event: ShitEvent): Observable<ShitServerResponse> {
+  public createEvent(name: string, description: string, date: Date, groupId: number): Observable<ShitServerResponse> {
+
+    const user = this.accountService.getUser();
+
+    if (!user) {
+      return new Observable<ShitServerResponse>((observer) => {
+        observer.next({
+          status: "error",
+          data: {
+            message: "User not logged in"
+          }
+        });
+      });
+    }
+
+    const event: ShitEvent = {
+      id: -1,
+      creatorId: user,
+      name,
+      date,
+      description,
+      groupId
+    }
+
     return this.post<ShitServerResponse>(HttpClientService.eventsUrl, event);
   }
 
-  public getSubscribtions(): Observable<EventSubscription[]> {
+  public getSubscriptions(): Observable<EventSubscription[]> {
     return this.get<EventSubscription[]>(HttpClientService.subscriptionUrl);
   }
 

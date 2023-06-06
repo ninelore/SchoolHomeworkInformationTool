@@ -7,10 +7,10 @@ import { EventSubscription } from '../models/event-subscription';
 @Injectable({
   providedIn: 'root'
 })
-export class FakeHttpClientService implements HttpClientInterface{
+export class FakeHttpClientService implements HttpClientInterface {
   private fakeUSerId = 1337;
 
-  private events:ShitEvent[] =  [
+  private events: ShitEvent[] = [
     {
       id: 0,
       name: "Event 1",
@@ -26,27 +26,27 @@ export class FakeHttpClientService implements HttpClientInterface{
   ]
 
   private subscrtions: EventSubscription[] = [
-    
+
   ]
 
   getEvents(): Observable<ShitEvent[]> {
     return new Observable<ShitEvent[]>((observer) => {
       observer.next(
-       this.events
+        this.events
       );
     })
   }
 
-  public subscribe(eventId: string, reminderAmount: number, reminderUnit: string): Observable<any> {
+  public subscribe(eventId: number, reminderAmount: number, reminderUnit: string): Observable<any> {
     const user = this.fakeUSerId;
     this.subscrtions.push({
       id: -1,
-      eventId: Number.parseInt(eventId),
+      eventId: eventId,
       userId: user,
       reminderAmount: reminderAmount,
       reminderUnit: reminderUnit
     })
-    
+
     return new Observable<any>(
       (observer) => {
         observer.next({
@@ -55,8 +55,17 @@ export class FakeHttpClientService implements HttpClientInterface{
       });
   }
 
-  createEvent(event:ShitEvent): Observable<any> {
-    this.events.push(event);
+  createEvent(name: string, description: string, date: Date, groupId: number): Observable<any> {
+
+    this.events.push({
+      id: -1,
+      creatorId: this.fakeUSerId,
+      name,
+      description,
+      date,
+      groupId
+    });
+
     return new Observable<any>(
       (observer) => {
         observer.next({
@@ -67,11 +76,11 @@ export class FakeHttpClientService implements HttpClientInterface{
   }
 
 
-  getSubscribtions(): Observable<EventSubscription[]> {
-   
+  getSubscriptions(): Observable<EventSubscription[]> {
+
     return new Observable<EventSubscription[]>((observer) => {
       observer.next(
-       this.subscrtions
+        this.subscrtions
       );
     })
 

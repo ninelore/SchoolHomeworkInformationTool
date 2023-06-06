@@ -2,17 +2,17 @@ import { Observable } from "rxjs";
 import { ShitEvent } from "../models/shit-event";
 import { EventSubscription } from "../models/event-subscription";
 
- export interface ShitServerResponse {
-     status: string;
-     data: Object;
- }
+export interface ShitServerResponse {
+    status: string;
+    data: Object;
+}
 
-export interface HttpClientInterface  {
+export interface HttpClientInterface {
     getEvents(): Observable<ShitEvent[]>;
 
-    createEvent(event:ShitEvent): Observable<ShitServerResponse>
+    createEvent(name: string, description: string, date: Date, groupId: number): Observable<ShitServerResponse>
 
-    subscribe(eventId:string, reminderAmount:number, reminderUnit: string): Observable<ShitServerResponse>;
+    subscribe(eventId: number, reminderAmount: number, reminderUnit: string): Observable<ShitServerResponse>;
 
-    getSubscribtions(): Observable<EventSubscription[]>;
+    getSubscriptions(): Observable<EventSubscription[]>;
 }
