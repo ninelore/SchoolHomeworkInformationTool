@@ -18,8 +18,8 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     const code = new URLSearchParams(window.location.search).get("code");
-    if (code != null) {
-      //accountService.login // TBD
+    if (!this.isLoggedIn() && code != null) {
+      this.accountService.login(code) // TBD
     }
   }
 

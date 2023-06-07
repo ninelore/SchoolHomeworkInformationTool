@@ -69,7 +69,7 @@ export class HttpClientService implements HttpClientInterface {
 
     const event: ShitEvent = {
       id: -1,
-      creatorId: user,
+      creatorId: user.id,
       name,
       date,
       description,
