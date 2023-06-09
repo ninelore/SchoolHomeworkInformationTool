@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClientInterface } from './http-client.interface';
+import { HttpClientInterface, ShitServerResponse } from './http-client.interface';
 import { Observable } from 'rxjs';
 import { ShitEvent } from '../models/shit-event';
 import { EventSubscription } from '../models/event-subscription';
@@ -8,8 +8,10 @@ import { EventSubscription } from '../models/event-subscription';
   providedIn: 'root'
 })
 export class FakeHttpClientService implements HttpClientInterface {
-  private fakeUSerId = 1337;
 
+  private fakeUSerId = 1337;
+  private eventCounter = 0;
+  private subscriptionCounter = 0;
   private events: ShitEvent[] = [
     {
       id: 0,
@@ -37,16 +39,12 @@ export class FakeHttpClientService implements HttpClientInterface {
     })
   }
 
-  public subscribe(eventId: number, reminderAmount: number, reminderUnit: string): Observable<any> {
+  public subscribe(subscription: EventSubscription): Observable<any> {
     const user = this.fakeUSerId;
-    this.subscrtions.push({
-      id: -1,
-      eventId: eventId,
-      userId: user,
-      reminderAmount: reminderAmount,
-      reminderUnit: reminderUnit
-    })
+    subscription.id = this.subscriptionCounter++;
+    this.subscrtions.push(subscription)
 
+    console.log("subscribing: ", subscription)
     return new Observable<any>(
       (observer) => {
         observer.next({
@@ -55,17 +53,9 @@ export class FakeHttpClientService implements HttpClientInterface {
       });
   }
 
-  createEvent(name: string, description: string, date: Date, groupId: number): Observable<any> {
-
-    this.events.push({
-      id: Math.round(Math.random() * 10000),
-      creatorId: this.fakeUSerId,
-      name,
-      description,
-      date,
-      groupId
-    });
-
+  createEvent(event: ShitEvent): Observable<any> {
+    event.id = this.eventCounter++;
+    console.log("creating event: ", event)
     return new Observable<any>(
       (observer) => {
         observer.next({
@@ -85,5 +75,18 @@ export class FakeHttpClientService implements HttpClientInterface {
     })
 
   }
+  
+  unsubscribe(subscription: EventSubscription): Observable<ShitServerResponse> {
+    this.subscrtions = this.subscrtions.filter(
+      (s) => s.id !== subscription.id
+    )
+    console.log("unsubscribing: ", subscription)
+    return new Observable<ShitServerResponse>((observer) => {
+      observer.next({
+        status: "success",
+        data: {}
+      });
+    })
 
+  }
 }

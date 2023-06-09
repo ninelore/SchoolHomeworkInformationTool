@@ -5,6 +5,7 @@ import { FakeHttpClientService } from 'src/app/service/fake-http-client.service'
 import { Router } from '@angular/router';
 import { AccountService } from 'src/app/service/account.service';
 import { EventSubscription } from 'src/app/models/event-subscription';
+import { bootstrapApplication } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-overview',
@@ -12,33 +13,16 @@ import { EventSubscription } from 'src/app/models/event-subscription';
   styleUrls: ['./overview.component.scss']
 })
 export class OverviewComponent {
-  editSubscriptionFn(event: ShitEvent) {
-    // TODO: open subscription form/modal
-    return ()=>{
-      this.refresh();
-    }
-
-  }
-
-  subscribeFn(event: ShitEvent) {
-
-    // TODO: open subscription form/modal
-
-    return ()=>{
-      this.backend.subscribe(event.id ?? -1, 1, "day");
-      this.refresh();
-    }
-  }
-
-  hasSubscribed(event: ShitEvent): boolean {
-    return this.subscriptions.filter(subscription => event.id === subscription.eventId).length > 0
-  }
+  onSaveCallback:(newSubs: EventSubscription[], deletedSubs: EventSubscription[], updatedSubs: EventSubscription[]) => void 
+  
+  private readonly SubcriptionModalId = "subscriptionModal";
 
   events: ShitEvent[] = [];
   shownEvents: ShitEvent[] = this.events;
   sortMode: string = "date"; // TODO maybe change to enum
   textFilter: string = ""
   subscriptions: EventSubscription[] = [];
+  selectedEvent: ShitEvent | null = null;
 
   public refresh() {
     this.backend.getEvents().subscribe(
@@ -51,6 +35,21 @@ export class OverviewComponent {
 
   constructor(private backend: FakeHttpClientService, private router: Router, private accountService: AccountService) {
     this.refresh();
+
+    this.onSaveCallback = (newSubs: EventSubscription[], deletedSubs: EventSubscription[], updatedSubs: EventSubscription[]) => {
+      console.log("onSaveCallback",newSubs, deletedSubs, updatedSubs)
+      newSubs.forEach(newSub => {
+        this.backend.subscribe(newSub)
+      })
+
+      deletedSubs.forEach(deletedSub => {
+        this.backend.unsubscribe(deletedSub);
+      })
+
+      this.refresh();
+    }
+
+
   }
 
   public search(event: Event) {
@@ -93,7 +92,29 @@ export class OverviewComponent {
 
   }
 
+  editSubscriptionFn(event: ShitEvent) {
+    // TODO: open subscription form/modal
 
+    return () => {
+      this.selectedEvent = event;
+      this.refresh();
+    }
+
+  }
+
+  subscribeFn(event: ShitEvent) {
+
+    // TODO: open subscription form/modal
+    return () => {
+      this.selectedEvent = event;
+
+      this.refresh();
+    }
+  }
+
+  hasSubscribed(event: ShitEvent): boolean {
+    return this.subscriptions.filter(subscription => event.id === subscription.eventId).length > 0
+  }
 
   getUser() {
     // TODO: Enable read function
@@ -106,11 +127,15 @@ export class OverviewComponent {
     // this.router.navigate(['/form'], { queryParams: { mode: 'create' }});
 
     // TMP code
-    this.backend.createEvent(
-      `Random Event ${Math.round(Math.random() * 1337)}`,
-      "Random Event", new Date(Math.round(Date.now() + Math.random() * 14 * (24 * 60 * 60 * 1000))),
-      0
-    )
+    const event = {
+      id: Math.round(Math.random() * 1337),
+      name: `Random Event ${Math.round(Math.random() * 1337)}`,
+      groupId: Math.round(Math.random() * 1337),
+      creatorId: Math.round(Math.random() * 1337),
+      description: `Random Event ${Math.round(Math.random() * 1337)}`,
+      date: new Date(Math.round(Date.now() + Math.random() * 14 * (24 * 60 * 60 * 1000))),
+    }
+    this.backend.createEvent(event)
 
   }
 }

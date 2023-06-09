@@ -1,0 +1,29 @@
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit subscriptions</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- add notifiy on event if first subscription-->
+                <div *ngFor="let subscription of renderedSubsciptions" class="input-group">
+                    <select class="form-select" name="reminderUnit" id="" [disabled]="subscription.id!==-1">
+                        <option value="days" [selected]="subscription.reminderUnit==='days'">Days</option>
+                        <option value="hours" [selected]="subscription.reminderUnit==='hours'">Hours</option>
+                        <option value="minutes" [selected]="subscription.reminderUnit==='minutes'">Minutes</option>
+                    </select>
+                    <input type="number" class="form-control" [value]="subscription.reminderAmount">
+                    <button aria-label="Delete" class="btn" (click)="deleteSubscription(subscription)">
+                        <i class="fa fa-times"></i>
+                    </button>
+                </div>
+                <button class="btn" (click)="createNewSubscription()">Add new notification</button>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="cancle()">Cancle</button>
+                <button type="button" class="btn btn-primary" (click)="save()">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>

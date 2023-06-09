@@ -10,11 +10,13 @@ export interface ShitServerResponse {
 export interface HttpClientInterface {
     getEvents(): Observable<ShitEvent[]>;
 
-    createEvent(name: string, description: string, date: Date, groupId: number): Observable<ShitServerResponse>
+    createEvent(event:ShitEvent): Observable<ShitServerResponse>
 
-    subscribe(eventId: number, reminderAmount: number, reminderUnit: string): Observable<ShitServerResponse>;
+    subscribe(subcription:EventSubscription): Observable<ShitServerResponse>;
 
     getSubscriptions(): Observable<EventSubscription[]>;
+
+    unsubscribe(subscription:EventSubscription): Observable<ShitServerResponse>;
 
     // deleteEvent
 

@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { OverviewComponent } from './views/overview/overview.component';
 import { TestComponent } from './views/test/test.component';
 import { EventDisplayComponent } from './components/event-display/event-display.component';
+import { SubcriptionModalComponent } from './components/subcription-modal/subcription-modal.component';
 import { EventFormComponent } from './views/event-form/event-form.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import {MatExpansionModule} from "@angular/material/expansion";
@@ -18,6 +19,7 @@ import {HttpClientModule} from "@angular/common/http";
     AppComponent,
     OverviewComponent,
     TestComponent,
+    SubcriptionModalComponent,
     EventDisplayComponent,
     EventFormComponent
   ],

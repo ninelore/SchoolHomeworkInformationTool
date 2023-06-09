@@ -17,8 +17,10 @@ export class HttpClientService implements HttpClientInterface {
   private static readonly createEventsUrl = HttpClientService.basePath +  "/createEvent"
   private static readonly getSubscriptionUrl = HttpClientService.basePath + "/getSubscriptions"
   private static readonly createSubscriptionUrl = HttpClientService.basePath + "/createEventSubscription"
+  private static readonly deleteSubscriptionUrl = HttpClientService.basePath + "/deleteSubscription"
 
   constructor(private http: HttpClient, private accountService: AccountService) { }
+
 
 
   private get<C>(url: string) {
@@ -29,7 +31,11 @@ export class HttpClientService implements HttpClientInterface {
     return this.http.post<C>(url, data)
   }
 
-  public subscribe(eventId: number, reminderAmount: number, reminderUnit: string): Observable<ShitServerResponse> {
+  private delete<C>(url: string) {
+    return this.http.delete<C>(url)
+  }
+
+  public subscribe(subscription: EventSubscription): Observable<ShitServerResponse> {
     const user = this.accountService.getUser();
 
     if (!user) {
@@ -43,12 +49,7 @@ export class HttpClientService implements HttpClientInterface {
       });
     }
 
-    return this.post(HttpClientService.createSubscriptionUrl, {
-      userId: user,
-      eventId: eventId,
-      reminderAmount: reminderAmount,
-      reminderUnit: reminderUnit
-    })
+    return this.post(HttpClientService.createSubscriptionUrl, subscription);
 
   }
 
@@ -65,7 +66,7 @@ export class HttpClientService implements HttpClientInterface {
     return this.get<ShitEvent[]>(HttpClientService.getEventsUrl + `/${user}`);
   }
 
-  public createEvent(name: string, description: string, date: Date, groupId: number): Observable<ShitServerResponse> {
+  public createEvent(event: ShitEvent): Observable<ShitServerResponse> {
 
     const user = this.accountService.getUser();
 
@@ -80,14 +81,7 @@ export class HttpClientService implements HttpClientInterface {
       });
     }
 
-    const event: ShitEvent = {
-      id: -1,
-      creatorId: user.id,
-      name,
-      date,
-      description,
-      groupId
-    }
+    
 
     return this.post<ShitServerResponse>(HttpClientService.createEventsUrl, event);
   }
@@ -103,6 +97,10 @@ export class HttpClientService implements HttpClientInterface {
     }
 
     return this.get<EventSubscription[]>(HttpClientService.getSubscriptionUrl + `/${user}`);
+  }
+
+  unsubscribe(subscription: EventSubscription): Observable<ShitServerResponse> {
+    return this.delete<ShitServerResponse>(HttpClientService.deleteSubscriptionUrl + `/${subscription.id}`);
   }
 
 }
