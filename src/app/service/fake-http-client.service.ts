@@ -58,7 +58,7 @@ export class FakeHttpClientService implements HttpClientInterface {
   createEvent(name: string, description: string, date: Date, groupId: number): Observable<any> {
 
     this.events.push({
-      id: -1,
+      id: Math.round(Math.random() * 10000),
       creatorId: this.fakeUSerId,
       name,
       description,
