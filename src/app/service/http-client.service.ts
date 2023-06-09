@@ -5,13 +5,14 @@ import { HttpClientInterface, ShitServerResponse } from './http-client.interface
 import { Observable } from 'rxjs';
 import { EventSubscription } from '../models/event-subscription';
 import { AccountService } from './account.service';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HttpClientService implements HttpClientInterface {
 
-  private static readonly basePath = "/rest/shit"
+  private static readonly basePath = environment.serviceUrl + "/rest/shit"
   private static readonly getEventsUrl = HttpClientService.basePath +  "/getEvents"
   private static readonly createEventsUrl = HttpClientService.basePath +  "/createEvent"
   private static readonly getSubscriptionUrl = HttpClientService.basePath + "/getSubscriptions"

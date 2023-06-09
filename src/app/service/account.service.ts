@@ -30,7 +30,7 @@ export class AccountService {
 
   login(code: String): void {
     const redirUrl = window.location.origin;
-    this.user = this.http.get<User>(environment.serviceUrl + 'auth/authWithCode/' + code + "/" + redirUrl).subscribe()
+    this.user = this.http.get<User>(environment.serviceUrl + 'rest/auth/authWithCode/' + code + "/" + redirUrl).subscribe() //ToDo
   }
 
   logout(): void {
