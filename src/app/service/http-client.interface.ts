@@ -15,4 +15,14 @@ export interface HttpClientInterface {
     subscribe(eventId: number, reminderAmount: number, reminderUnit: string): Observable<ShitServerResponse>;
 
     getSubscriptions(): Observable<EventSubscription[]>;
+
+    // deleteEvent
+
+    // deleteSubscription
+
+    // getGroups
+
+    // getUserInfo
+
+    
 }

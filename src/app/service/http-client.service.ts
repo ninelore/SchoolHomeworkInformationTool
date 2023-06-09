@@ -11,8 +11,11 @@ import { AccountService } from './account.service';
 })
 export class HttpClientService implements HttpClientInterface {
 
-  private static readonly eventsUrl = "rest/events"
-  private static readonly subscriptionUrl = "rest/subscriptions"
+  private static readonly basePath = "/rest/shit"
+  private static readonly getEventsUrl = HttpClientService.basePath +  "/getEvents"
+  private static readonly createEventsUrl = HttpClientService.basePath +  "/createEvent"
+  private static readonly getSubscriptionUrl = HttpClientService.basePath + "/getSubscriptions"
+  private static readonly createSubscriptionUrl = HttpClientService.basePath + "/createEventSubscription"
 
   constructor(private http: HttpClient, private accountService: AccountService) { }
 
@@ -39,7 +42,7 @@ export class HttpClientService implements HttpClientInterface {
       });
     }
 
-    return this.post(HttpClientService.subscriptionUrl, {
+    return this.post(HttpClientService.createSubscriptionUrl, {
       userId: user,
       eventId: eventId,
       reminderAmount: reminderAmount,
@@ -49,7 +52,16 @@ export class HttpClientService implements HttpClientInterface {
   }
 
   public getEvents() {
-    return this.get<ShitEvent[]>(HttpClientService.eventsUrl);
+
+    const user = this.accountService.getUser();
+    if(!user) {
+      alert("User not logged in");
+      return new Observable<ShitEvent[]>((observer) => {
+        observer.next([]);
+      });
+    }
+
+    return this.get<ShitEvent[]>(HttpClientService.getEventsUrl + `/${user}`);
   }
 
   public createEvent(name: string, description: string, date: Date, groupId: number): Observable<ShitServerResponse> {
@@ -76,11 +88,20 @@ export class HttpClientService implements HttpClientInterface {
       groupId
     }
 
-    return this.post<ShitServerResponse>(HttpClientService.eventsUrl, event);
+    return this.post<ShitServerResponse>(HttpClientService.createEventsUrl, event);
   }
 
   public getSubscriptions(): Observable<EventSubscription[]> {
-    return this.get<EventSubscription[]>(HttpClientService.subscriptionUrl);
+
+    const user = this.accountService.getUser();
+
+    if (!user) {
+      return new Observable<EventSubscription[]>((observer) => {
+        observer.next([]);
+      });
+    }
+
+    return this.get<EventSubscription[]>(HttpClientService.getSubscriptionUrl + `/${user}`);
   }
 
 }
