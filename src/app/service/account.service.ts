@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {User} from "../models/user";
+import { User } from "../models/user";
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -28,7 +29,8 @@ export class AccountService {
   }
 
   login(code: String): void {
-    this.user = this.http.get<User>()
+    const redirUrl = window.location.origin;
+    this.user = this.http.get<User>(environment.serviceUrl + 'auth/authWithCode/' + code + "/" + redirUrl).subscribe()
   }
 
   logout(): void {

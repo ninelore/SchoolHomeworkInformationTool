@@ -2,6 +2,6 @@ export interface User {
     id: number;
     token: string;
     name: string;
-    discordHandle: string;
+    discordId: number;
     email: string;
 }
