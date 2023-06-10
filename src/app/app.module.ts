@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { OverviewComponent } from './views/overview/overview.component';
 import { TestComponent } from './views/test/test.component';
 import { EventDisplayComponent } from './components/event-display/event-display.component';
-import { SubcriptionModalComponent } from './components/subcription-modal/subcription-modal.component';
+import { SubcriptionModalComponent } from './components/subscription-modal/subcription-modal.component';
 import { EventFormComponent } from './views/event-form/event-form.component';
 import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
 import {MatExpansionModule} from "@angular/material/expansion";
@@ -14,6 +14,8 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import {CdkAccordionModule} from "@angular/cdk/accordion";
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {HttpClientModule} from "@angular/common/http";
+import { UserSettingsComponent } from './views/user-settings/user-settings.component';
+import { GroupsComponent } from './views/groups/groups.component';
 import { IndexComponent } from './components/index/index.component';
 
 @NgModule({
@@ -24,6 +26,8 @@ import { IndexComponent } from './components/index/index.component';
     SubcriptionModalComponent,
     EventDisplayComponent,
     EventFormComponent,
+    UserSettingsComponent,
+    GroupsComponent,
     IndexComponent
   ],
   imports: [
@@ -33,6 +37,8 @@ import { IndexComponent } from './components/index/index.component';
       {path: "index", component: IndexComponent},
       {path: "test", component: TestComponent},
       {path: "list", component: OverviewComponent},
+      {path:"settings",component: UserSettingsComponent},
+      {path:"groups",component:GroupsComponent},
       {path: "form", component: EventFormComponent}
     ]),
     HttpClientModule,

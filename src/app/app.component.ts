@@ -14,7 +14,9 @@ export class AppComponent implements OnInit {
 
   menuItems = new Map<String, String>([
     ["list", "Overview"],
-    ["test", "Test"]
+    ["test", "Test"],
+    ["groups","Groups"],
+    ["settings","Settings"]
   ]);
   breakpointObserver: any;
 
@@ -23,7 +25,7 @@ export class AppComponent implements OnInit {
     private router: Router
   ) {
     this.router.events.subscribe(event => {
-      if (this.drawer.opened) {
+      if (this.drawer?.opened) {
         this.drawer.close;
       }
     });
