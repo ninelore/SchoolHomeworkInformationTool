@@ -15,7 +15,7 @@ export class HttpClientService implements HttpClientInterface {
   private static readonly basePath = environment.serviceUrl + "/rest/shit"
   private static readonly getEventsUrl = HttpClientService.basePath +  "/getEvents"
   private static readonly createEventsUrl = HttpClientService.basePath +  "/createEvent"
-  private static readonly getSubscriptionUrl = HttpClientService.basePath + "/getSubscriptions"
+  private static readonly getSubscriptionUrl = HttpClientService.basePath + "/getEventSubscriptions"
   private static readonly createSubscriptionUrl = HttpClientService.basePath + "/createEventSubscription"
   private static readonly deleteSubscriptionUrl = HttpClientService.basePath + "/deleteSubscription"
 
@@ -63,7 +63,7 @@ export class HttpClientService implements HttpClientInterface {
       });
     }
 
-    return this.get<ShitEvent[]>(HttpClientService.getEventsUrl + `/${user}`);
+    return this.get<ShitEvent[]>(HttpClientService.getEventsUrl + `/${user.id}`);
   }
 
   public createEvent(event: ShitEvent): Observable<ShitServerResponse> {
@@ -81,8 +81,6 @@ export class HttpClientService implements HttpClientInterface {
       });
     }
 
-    
-
     return this.post<ShitServerResponse>(HttpClientService.createEventsUrl, event);
   }
 
@@ -96,7 +94,7 @@ export class HttpClientService implements HttpClientInterface {
       });
     }
 
-    return this.get<EventSubscription[]>(HttpClientService.getSubscriptionUrl + `/${user}`);
+    return this.get<EventSubscription[]>(HttpClientService.getSubscriptionUrl + `/${user.id}`);
   }
 
   unsubscribe(subscription: EventSubscription): Observable<ShitServerResponse> {

@@ -4,5 +4,5 @@ export interface ShitEvent {
     groupId?: number;
     creatorId?: number;
     description?: string;
-    date?: Date;
+    date?: string;
 }

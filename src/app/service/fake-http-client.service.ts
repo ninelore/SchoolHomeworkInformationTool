@@ -17,13 +17,13 @@ export class FakeHttpClientService implements HttpClientInterface {
       id: 0,
       name: "Event 1",
       description: "Description 1",
-      date: new Date("2023-05-30")
+      date: new Date("2023-05-30").toISOString()
     },
     {
       id: 1,
       name: "Event 2",
       description: "Description 2",
-      date: new Date("2023-06-27")
+      date: new Date("2023-06-27").toISOString()
     }
   ]
 

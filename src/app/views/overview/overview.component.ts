@@ -128,14 +128,16 @@ export class OverviewComponent {
 
     // TMP code
     const event = {
-      id: Math.round(Math.random() * 1337),
+      id: -1,
       name: `Random Event ${Math.round(Math.random() * 1337)}`,
-      groupId: Math.round(Math.random() * 1337),
-      creatorId: Math.round(Math.random() * 1337),
+      groupId: 1,
+      creatorId: this.accountService.getUser()?.id,
       description: `Random Event ${Math.round(Math.random() * 1337)}`,
-      date: new Date(Math.round(Date.now() + Math.random() * 14 * (24 * 60 * 60 * 1000))),
+      date: new Date(Math.round(Date.now() + Math.random() * 14 * (24 * 60 * 60 * 1000))).toISOString(),
     }
-    this.backend.createEvent(event)
+    this.backend.createEvent(event).subscribe(data=>{
+      console.log("createEvent",data)
+    })
 
   }
 }
