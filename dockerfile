@@ -16,4 +16,5 @@ FROM nginx:alpine-slim
 
 COPY --from=builder /opt/shit-ui-src/dist/school-homework-infomation-tool/ /usr/share/nginx/html
 
-EXPOSE 80
+EXPOSE 80 
+EXPOSE 443
