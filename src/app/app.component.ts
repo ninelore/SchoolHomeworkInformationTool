@@ -23,7 +23,7 @@ export class AppComponent implements OnInit {
     private router: Router
   ) {
     this.router.events.subscribe(event => {
-      if (this.drawer.opened) {
+      if (this.drawer?.opened) {
         this.drawer.close;
       }
     });
