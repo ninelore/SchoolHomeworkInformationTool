@@ -20,8 +20,6 @@ export interface HttpClientInterface {
 
     // deleteEvent
 
-    // deleteSubscription
-
     // getGroups
 
     // getUserInfo

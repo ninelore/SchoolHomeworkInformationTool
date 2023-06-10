@@ -17,7 +17,7 @@ export class HttpClientService implements HttpClientInterface {
   private static readonly createEventsUrl = HttpClientService.basePath +  "/createEvent"
   private static readonly getSubscriptionUrl = HttpClientService.basePath + "/getEventSubscriptions"
   private static readonly createSubscriptionUrl = HttpClientService.basePath + "/createEventSubscription"
-  private static readonly deleteSubscriptionUrl = HttpClientService.basePath + "/deleteSubscription"
+  private static readonly deleteSubscriptionUrl = HttpClientService.basePath + "/deleteEventSubscriptions"
 
   constructor(private http: HttpClient, private accountService: AccountService) { }
 

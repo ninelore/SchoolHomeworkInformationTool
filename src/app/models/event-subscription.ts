@@ -3,5 +3,5 @@ export interface EventSubscription {
     userId: number;
     eventId: number;
     reminderAmount: number;
-    reminderUnit: string;
+    reminderUnit: "WEEK"|"HOUR"|"DAY";
 }

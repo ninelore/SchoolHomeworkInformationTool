@@ -8,12 +8,12 @@
             <div class="modal-body">
                 <!-- add notifiy on event if first subscription-->
                 <div *ngFor="let subscription of renderedSubsciptions" class="input-group">
-                    <select class="form-select" name="reminderUnit" id="" [disabled]="subscription.id!==-1">
-                        <option value="days" [selected]="subscription.reminderUnit==='days'">Days</option>
-                        <option value="hours" [selected]="subscription.reminderUnit==='hours'">Hours</option>
-                        <option value="minutes" [selected]="subscription.reminderUnit==='minutes'">Minutes</option>
+                    <select class="form-select" name="reminderUnit" id="" [disabled]="subscription.id>0" (change)="changeReminderUnit($event, subscription.id)">
+                        <option value="DAY" [selected]="subscription.reminderUnit==='DAY'">Days</option>
+                        <option value="HOUR" [selected]="subscription.reminderUnit==='HOUR'">Hours</option>
+                        <option value="WEEK" [selected]="subscription.reminderUnit==='WEEK'">Weeks</option>
                     </select>
-                    <input type="number" class="form-control" [value]="subscription.reminderAmount">
+                    <input type="number" class="form-control" [value]="subscription.reminderAmount" (change)="changeReminderAmount($event, subscription.id)">
                     <button aria-label="Delete" class="btn" (click)="deleteSubscription(subscription)">
                         <i class="fa fa-times"></i>
                     </button>

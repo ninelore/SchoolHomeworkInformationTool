@@ -9,7 +9,21 @@ import { AccountService } from 'src/app/service/account.service';
   styleUrls: ['./subcription-modal.component.scss']
 })
 export class SubcriptionModalComponent implements OnChanges, OnInit {
+  changeReminderAmount($event: Event, arg1: number) {
+    const target = $event.target as HTMLInputElement;
+    const value = target.value
 
+    this.newSubscriptions.filter(sub => sub.id === arg1)[0].reminderAmount = parseInt(value);
+
+  }
+  changeReminderUnit($event: Event, arg1: number) {
+    const target = $event.target as HTMLSelectElement;
+    const value = target.value;
+
+    this.newSubscriptions.filter(sub => sub.id === arg1)[0].reminderUnit = (value as "WEEK" | "HOUR" | "DAY");
+
+  }
+  private static internalNewSubscriptionId = -1;
 
   @Input() public event: ShitEvent | null = null;
   @Input() public subscriptions: EventSubscription[] = [];
@@ -53,9 +67,9 @@ export class SubcriptionModalComponent implements OnChanges, OnInit {
 
     this.newSubscriptions.push({
       eventId: this.event?.id ?? -1,
-      id: -1,
+      id: SubcriptionModalComponent.internalNewSubscriptionId--,
       reminderAmount: 0,
-      reminderUnit: "minutes",
+      reminderUnit: "DAY",
       userId: this.accountService.getUser()?.id ?? -1
     })
 
@@ -79,7 +93,7 @@ export class SubcriptionModalComponent implements OnChanges, OnInit {
 
   save() {
 
-    this.onSaveCallback(this.newSubscriptions,this.deletedSubscriptions, []);
+    this.onSaveCallback(this.newSubscriptions, this.deletedSubscriptions, []);
     this.newSubscriptions = [];
     this.deletedSubscriptions = [];
     this.addDefaultSubscription();
@@ -103,7 +117,7 @@ export class SubcriptionModalComponent implements OnChanges, OnInit {
         eventId: this.event?.id ?? -1,
         id: -1,
         reminderAmount: 0,
-        reminderUnit: "minutes",
+        reminderUnit: "DAY",
         userId: this.accountService.getUser()?.id ?? -1
       })
     }

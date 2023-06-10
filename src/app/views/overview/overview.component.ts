@@ -39,13 +39,20 @@ export class OverviewComponent {
     this.onSaveCallback = (newSubs: EventSubscription[], deletedSubs: EventSubscription[], updatedSubs: EventSubscription[]) => {
       console.log("onSaveCallback",newSubs, deletedSubs, updatedSubs)
       newSubs.forEach(newSub => {
-        this.backend.subscribe(newSub)
+        this.backend.subscribe(newSub).subscribe(data=>{
+          // TODO handle errors
+          console.log(data);
+        });
       })
 
       deletedSubs.forEach(deletedSub => {
-        this.backend.unsubscribe(deletedSub);
+        this.backend.unsubscribe(deletedSub).subscribe(data=>{
+          // TODO handle errors
+          console.log(data);
+        })
       })
 
+      // TODO: call after all subscriptions are saved or deleted
       this.refresh();
     }
 
