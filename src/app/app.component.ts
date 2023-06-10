@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import { Router } from '@angular/router';
 import {AccountService} from "./service/account.service";
 
 @Component({
@@ -13,18 +14,20 @@ export class AppComponent implements OnInit {
   ]);
 
   constructor(
-    private accountService: AccountService
+    private accountService: AccountService,
+    private router: Router
   ) { }
 
   ngOnInit() {
-    console.log("Hello Init")
     const code = new URLSearchParams(window.location.search).get("code");
     const storedToken = localStorage.getItem("SESSIONTOKEN");
-    if (!this.isLoggedIn() && code != null) {
+    if (!this.isLoggedIn()) {
       if (storedToken != null && storedToken.length > 0) {
-        this.accountService.loginWithToken(storedToken, code);
-      } else {
-        this.accountService.loginWithCode(code)
+        this.accountService.loginWithToken(storedToken);
+        this.router.navigateByUrl('/');
+      } else if (code != null) {
+        this.accountService.loginWithCode(code);
+        this.router.navigateByUrl('/');
       }
     }
   }

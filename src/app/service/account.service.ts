@@ -1,9 +1,8 @@
-import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {User} from "../models/user";
-import {AuthRequestData} from "../models/authRequestData";
-import {environment} from '../../environments/environment';
-
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { User } from "../models/user";
+import { AuthRequestData } from "../models/authRequestData";
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +12,6 @@ export class AccountService {
   public redirUrl: String = window.location.origin;
   private user: User | null = null;
   private headers: string[] = [];
-  private status: number = 0;
 
   constructor(
     private http: HttpClient
@@ -35,42 +33,35 @@ export class AccountService {
 
   loginWithCode(code: String): void {
     const redirUrl = this.redirUrl;
-    let authdata: AuthRequestData = {code, redirUrl}
+    let authdata: AuthRequestData = { code, redirUrl }
     this.http.post<User>(
       environment.serviceUrl + '/rest/auth/authWithCode',
       authdata,
-      {observe: "response"}
+      { observe: "response" }
     )
       .subscribe(resp => {
         const keys = resp.headers.keys();
         this.headers = keys.map(key =>
           `${key}: ${resp.headers.get(key)}`);
         this.user = resp.body;
+        if (this.user != null) {
+          localStorage.setItem("SESSIONTOKEN", this.user.token)
+        }
       });
-    if (this.user?.token) {
-      localStorage.setItem("SESSIONTOKEN", this.user?.token)
-    }
   }
 
-  loginWithToken(code: String, code2: String): void {
+  loginWithToken(code: String): void {
     const redirUrl = this.redirUrl;
-    let authdata: AuthRequestData = {code, redirUrl}
+    let authdata: AuthRequestData = { code, redirUrl }
     this.http.post<User>(
-      environment.serviceUrl + '/rest/auth/authWithToken/' + code + "/" + this.redirUrl,
+      environment.serviceUrl + '/rest/auth/authWithToken',
       authdata,
-      {observe: "response"}
+      { observe: "response" }
     )
-      .subscribe(resp => {
-        const keys = resp.headers.keys();
-        this.status = resp.status;
-        this.headers = keys.map(key =>
-          `${key}: ${resp.headers.get(key)}`);
-        this.user = resp.body;
-      });
-    if (this.status == 403){
-      localStorage.removeItem("SESSIONTOKEN");
-      this.loginWithCode(code2);
-    }
+      .subscribe(
+        resp => this.user = resp.body,
+        error => localStorage.removeItem("SESSIONTOKEN")
+      );
   }
 
   logout(): void {
