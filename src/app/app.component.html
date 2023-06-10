@@ -1,8 +1,8 @@
 <!doctype html>
 
 <!-- TODO: Sidenav mobile behavior -->
-<div class="h-100 w-auto">
-  <div class="row">
+<div class="h-100 mw-100 w-auto d-flex flex-column overflow-hidden">
+  <div class="row flex-shrink-1">
     <mat-toolbar class="col-12" color="primary">
       <button type="button" [disabled]="!isLoggedIn()" class="fs-2 mx-3" mat-button (click)="drawer.toggle()"
         data-bs-target="#header-collapse">
@@ -13,7 +13,7 @@
       </a>
     </mat-toolbar>
   </div>
-  <mat-sidenav-container class="row d-flex" [hasBackdrop]="true" (backdropClick)="drawer.close">
+  <mat-sidenav-container class="flex-grow-1" [hasBackdrop]="true" (backdropClick)="drawer.close">
     <mat-sidenav class="sidenav" #drawer mode="over" (keydown.escape)="drawer.close">
       <ng-container class="row" *ngFor="let item of menuItems | keyvalue">
         <div class="my-4 mx-5">
