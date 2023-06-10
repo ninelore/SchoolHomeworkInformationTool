@@ -1,3 +1,3 @@
 export const environment = {
-  serviceUrl: ''
+  serviceUrl: 'https://school-homework-information-tool-service.fly.dev:8080'
 };
