@@ -1,6 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import {AccountService} from "./service/account.service";
+import { AccountService } from "./service/account.service";
+import { MatSidenav } from '@angular/material/sidenav';
+
 
 @Component({
   selector: 'app-root',
@@ -8,15 +10,22 @@ import {AccountService} from "./service/account.service";
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+  @ViewChild('drawer') public drawer: MatSidenav;
+
   menuItems = new Map<String, String>([
     ["list", "Overview"],
     ["test", "Test"]
   ]);
+  breakpointObserver: any;
 
   constructor(
     private accountService: AccountService,
     private router: Router
-  ) { }
+  ) {
+    this.router.events.subscribe(event => {
+      this.drawer.close;
+    });
+  }
 
   ngOnInit() {
     const code = new URLSearchParams(window.location.search).get("code");

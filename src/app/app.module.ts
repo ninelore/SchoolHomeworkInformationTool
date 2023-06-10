@@ -8,11 +8,13 @@ import { TestComponent } from './views/test/test.component';
 import { EventDisplayComponent } from './components/event-display/event-display.component';
 import { SubcriptionModalComponent } from './components/subcription-modal/subcription-modal.component';
 import { EventFormComponent } from './views/event-form/event-form.component';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
 import {MatExpansionModule} from "@angular/material/expansion";
+import {MatSidenavModule} from '@angular/material/sidenav';
 import {CdkAccordionModule} from "@angular/cdk/accordion";
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {HttpClientModule} from "@angular/common/http";
+import { IndexComponent } from './components/index/index.component';
 
 @NgModule({
   declarations: [
@@ -21,11 +23,14 @@ import {HttpClientModule} from "@angular/common/http";
     TestComponent,
     SubcriptionModalComponent,
     EventDisplayComponent,
-    EventFormComponent
+    EventFormComponent,
+    IndexComponent
   ],
   imports: [
     BrowserModule,
     RouterModule.forRoot([
+      {path: "", redirectTo: "index", pathMatch: "full"},
+      {path: "index", component: IndexComponent},
       {path: "test", component: TestComponent},
       {path: "list", component: OverviewComponent},
       {path: "form", component: EventFormComponent}
@@ -34,7 +39,9 @@ import {HttpClientModule} from "@angular/common/http";
     NoopAnimationsModule,
     MatExpansionModule,
     CdkAccordionModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatSidenavModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
