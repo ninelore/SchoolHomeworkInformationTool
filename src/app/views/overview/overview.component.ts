@@ -13,8 +13,8 @@ import { bootstrapApplication } from '@angular/platform-browser';
   styleUrls: ['./overview.component.scss']
 })
 export class OverviewComponent {
-  onSaveCallback:(newSubs: EventSubscription[], deletedSubs: EventSubscription[], updatedSubs: EventSubscription[]) => void 
-  
+  onSaveCallback:(newSubs: EventSubscription[], deletedSubs: EventSubscription[], updatedSubs: EventSubscription[]) => void
+
   private readonly SubcriptionModalId = "subscriptionModal";
 
   events: ShitEvent[] = [];
@@ -33,7 +33,7 @@ export class OverviewComponent {
     )
   }
 
-  constructor(private backend: FakeHttpClientService, private router: Router, private accountService: AccountService) {
+  constructor(private backend: HttpClientService, private router: Router, private accountService: AccountService) {
     this.refresh();
 
     this.onSaveCallback = (newSubs: EventSubscription[], deletedSubs: EventSubscription[], updatedSubs: EventSubscription[]) => {

@@ -17,18 +17,24 @@ export class AppComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    console.log("Hello Init")
     const code = new URLSearchParams(window.location.search).get("code");
+    const storedToken = localStorage.getItem("SESSIONTOKEN");
     if (!this.isLoggedIn() && code != null) {
-      this.accountService.login(code) // TBD
+      if (storedToken != null && storedToken.length > 0) {
+        this.accountService.loginWithToken(storedToken, code);
+      } else {
+        this.accountService.loginWithCode(code)
+      }
     }
   }
 
   isLoggedIn(): boolean {
-    //return this.accountService.isLoggedIn();
-    return true;
+    return this.accountService.isLoggedIn();
+    //return true;
   }
 
-  getLoginLink(): string {
+  getLoginLink(): String {
     return this.accountService.generateLoginLink();
   }
 }
