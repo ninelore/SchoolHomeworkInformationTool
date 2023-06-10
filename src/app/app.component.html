@@ -1,39 +1,43 @@
 <!doctype html>
 
 <!-- TODO: Sidenav mobile behavior -->
-<div class="row">
-  <mat-toolbar class="col-12" color="primary">
-    <button type="button" [disabled]="!isLoggedIn()" class="fs-2 mx-3" mat-button (click)="drawer.toggle()"
-      data-bs-target="#header-collapse">
-      <i class="fa fa-bars"></i>
-    </button>
-    <a class="no-link-deco" (click)="drawer.close" routerLink="/">
-      <h1 class="fs-2">💩 S.H.I.T.</h1>
-    </a>
-  </mat-toolbar>
-</div>
-<mat-sidenav-container class="content" autosize [hasBackdrop]="true" (backdropClick)="drawer.close">
-  <mat-sidenav class="sidenav" #drawer mode="over" (keydown.escape)="drawer.close">
-    <ng-container class="row" *ngFor="let item of menuItems | keyvalue">
-      <div class="my-4 mx-5">
-        <a class="no-link-deco fs-5" routerLink="/{{item.key}}" (click)="drawer.close">{{item.value}}</a>
+<div class="h-100 w-auto">
+  <div class="row">
+    <mat-toolbar class="col-12" color="primary">
+      <button type="button" [disabled]="!isLoggedIn()" class="fs-2 mx-3" mat-button (click)="drawer.toggle()"
+        data-bs-target="#header-collapse">
+        <i class="fa fa-bars"></i>
+      </button>
+      <a class="no-link-deco" (click)="drawer.close" routerLink="/">
+        <h1 class="fs-2">💩 S.H.I.T.</h1>
+      </a>
+    </mat-toolbar>
+  </div>
+  <mat-sidenav-container class="row d-flex" [hasBackdrop]="true" (backdropClick)="drawer.close">
+    <mat-sidenav class="sidenav" #drawer mode="over" (keydown.escape)="drawer.close">
+      <ng-container class="row" *ngFor="let item of menuItems | keyvalue">
+        <div class="my-4 mx-5">
+          <a class="no-link-deco fs-5" routerLink="/{{item.key}}" (click)="drawer.close">{{item.value}}</a>
+        </div>
+      </ng-container>
+    </mat-sidenav>
+
+    <ng-container *ngIf="isLoggedIn()">
+      <div class="m-3">
+        <router-outlet></router-outlet>
       </div>
     </ng-container>
-  </mat-sidenav>
-  
 
-  <ng-container *ngIf="isLoggedIn()">
-    <div class="m-3">
-      <router-outlet></router-outlet>
-    </div>
-  </ng-container>
-
-  <ng-container *ngIf="!isLoggedIn()">
-    <div class="row mt-5">
-      <div class="col-12 offset-md-3 col-md-6 d-grid">
-        <a class="btn btn-outline-secondary py-4 fs-1" href="{{getLoginLink()}}"><i class="fa-brands fa-discord"></i>
-          Login with Discord</a>
+    <ng-container *ngIf="!isLoggedIn()">
+      <div class="m-3">
+        <div class="col-12 offset-md-4 col-md-4 d-grid">
+          <a class="btn btn-outline-primary py-4 fs-1" href="{{getLoginLink()}}">
+            <i class="fa-brands fa-discord"></i>
+            Login with Discord
+          </a>
+        </div>
       </div>
-    </div>
-  </ng-container>
-</mat-sidenav-container>
+    </ng-container>
+    <div class="d-flex"></div>
+  </mat-sidenav-container>
+</div>
