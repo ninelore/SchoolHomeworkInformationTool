@@ -15,7 +15,6 @@ export class AppComponent implements OnInit {
 
   menuItems = new Map<String, String>([
     ["list", "Overview"],
-    ["test", "Test"],
     ["groups","Groups"],
     ["settings","Settings"]
   ]);
