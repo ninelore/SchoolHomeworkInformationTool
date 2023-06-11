@@ -4,11 +4,24 @@ import { Observable } from 'rxjs';
 import { ShitEvent } from '../models/shit-event';
 import { EventSubscription } from '../models/event-subscription';
 import { Group } from '../models/group';
+import { GroupMembership } from '../models/group-membership';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FakeHttpClientService implements HttpClientInterface {
+  deleteEvent(event: ShitEvent): Observable<ShitServerResponse> {
+    throw new Error('Method not implemented.');
+  }
+  updateEvent(event: ShitEvent): Observable<ShitServerResponse> {
+    throw new Error('Method not implemented.');
+  }
+  deleteGroup(group: Group): Observable<ShitServerResponse> {
+    throw new Error('Method not implemented.');
+  }
+  addUserToGroup(group: GroupMembership): Observable<ShitServerResponse> {
+    throw new Error('Method not implemented.');
+  }
   getGroups(): Observable<Group[]> {
     throw new Error('Method not implemented.');
   }

@@ -2,7 +2,7 @@
     <div class="card-body">
         <div class="d-flex justify-content-between">
             <h3 class="card-title">{{event?.name ?? "No Name"}}</h3>
-            <button *ngIf="created" class="btn" routerLink="/form" [queryParams]="{mode:'edit','eventId':event?.id}">Edit</button>
+            <button *ngIf="created" class="btn" (click)="edit(event)" data-bs-toggle="modal" data-bs-target="#edit-event-modal">Edit</button>
         </div>
         <p class="card-text">{{event?.description ?? "No Description"}}</p>
         <p class="">{{(parseDate(event?.date)) ?? "No Date"}}</p>
