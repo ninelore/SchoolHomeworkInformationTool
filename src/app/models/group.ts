@@ -1,5 +1,5 @@
 export interface Group {
-    id: number;
+    id: number | null;
     name: string;
     discordGuidId: number;
     discordNotifyChannelId: number;

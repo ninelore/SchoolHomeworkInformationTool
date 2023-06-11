@@ -1,5 +1,5 @@
 export interface GroupMembership {
-    id: number;
+    id: number | null;
     userId: number;
     groupId: number;
 }
