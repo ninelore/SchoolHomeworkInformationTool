@@ -7,8 +7,8 @@ import { ShitEvent } from 'src/app/models/shit-event';
   styleUrls: ['./event-display.component.scss']
 })
 export class EventDisplayComponent {
-  parseDate(arg0: string|undefined): string|undefined{
-    if(arg0 === undefined){
+  parseDate(arg0: string | undefined): string | undefined {
+    if (arg0 === undefined) {
       return;
     }
     return new Date(arg0).toISOString()
@@ -18,4 +18,5 @@ export class EventDisplayComponent {
   @Input() public subscribed: boolean = false;
   @Input() public subscribe: () => void = () => { };
   @Input() public editSubscription: () => void = () => { };
+  @Input() public edit: (event: ShitEvent | null | undefined) => void = () => { };
 }

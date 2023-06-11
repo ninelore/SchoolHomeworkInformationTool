@@ -3,4 +3,4 @@
 <td>{{group?.ownerUserId ?? "no owner"}}</td>
 <td>{{group?.discordGuidId ?? "no guid"}}</td>
 <td>{{group?.discordNotifyChannelId ?? "no channel"}}</td>
-<td><button class="btn btn-primary">Edit</button></td>
+<td><button class="btn btn-primary">{{(group?.id ?? -1) > 0 ? "Edit" : "Save"}}</button></td>
