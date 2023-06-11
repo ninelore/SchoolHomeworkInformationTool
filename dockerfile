@@ -15,6 +15,9 @@ RUN npm run build
 FROM nginx:alpine-slim
 
 COPY --from=builder /opt/shit-ui-src/dist/school-homework-infomation-tool/ /usr/share/nginx/html
+COPY --from=builder /opt/shit-ui-src/nginx.conf /etc/nginx/conf.d/school-homework-infomation-tool.conf
+
+
 
 EXPOSE 80 
 EXPOSE 443
