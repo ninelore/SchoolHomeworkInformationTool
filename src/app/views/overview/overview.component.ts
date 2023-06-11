@@ -26,18 +26,6 @@ export class OverviewComponent {
   selectedEvent: ShitEvent | null = null;
   selectedSubscriptions: EventSubscription[] = [];
 
-
-  public refresh() {
-    forkJoin([this.backend.getEvents(), this.backend.getSubscriptions()]).subscribe(
-      ([events, subscriptions]) => {
-        this.events = events;
-        this.subscriptions = subscriptions
-        this.selectedSubscriptions = this.subscriptions.filter(sub => (this.selectedEvent !== null && sub.eventId === this.selectedEvent.id))
-        this.updateShownEvents();
-      }
-    )
-  }
-
   constructor(private backend: HttpClientService, private router: Router, private accountService: AccountService) {
     this.refresh();
 
@@ -54,9 +42,20 @@ export class OverviewComponent {
         }
       )
     }
-
-
   }
+
+  public refresh() {
+    forkJoin([this.backend.getEvents(), this.backend.getSubscriptions()]).subscribe(
+      ([events, subscriptions]) => {
+        this.events = events;
+        this.subscriptions = subscriptions
+        this.selectedSubscriptions = this.subscriptions.filter(sub => (this.selectedEvent !== null && sub.eventId === this.selectedEvent.id))
+        this.updateShownEvents();
+      }
+    )
+  }
+
+  
 
   public search(event: Event) {
     const value = (event.target as HTMLInputElement).value ?? "";
@@ -134,11 +133,11 @@ export class OverviewComponent {
   create() {
     // TODO: enable real function
     // this.router.navigate(['/form'], { queryParams: { mode: 'create' }});
-    return
+    //return
     // TMP code
     const rnd = Math.round(Math.random() * 1337);
     const event = {
-      id: -1,
+      id: null,
       name: `Random Event ${rnd}`,
       groupId: 1,
       creatorId: this.accountService.getUser()?.id ?? undefined,

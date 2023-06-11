@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { AccountService } from "./service/account.service";
 import { MatSidenav } from '@angular/material/sidenav';
+import { User } from './models/user';
 
 
 @Component({
@@ -44,6 +45,8 @@ export class AppComponent implements OnInit {
       }
     }
   }
+
+  
 
   isLoggedIn(): boolean {
     return this.accountService.isLoggedIn();
