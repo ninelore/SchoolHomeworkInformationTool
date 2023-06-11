@@ -1,18 +1,30 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Group } from 'src/app/models/group';
+import { HttpClientService } from 'src/app/service/http-client.service';
 
 @Component({
   selector: 'app-groups',
   templateUrl: './groups.component.html',
   styleUrls: ['./groups.component.scss']
 })
-export class GroupsComponent {
-  public groups: Group[] = [{
-    discordGuidId: 0,
-    discordNotifyChannelId: 0,
-    id: 0,
-    name: 'Group 0',
-    ownerUserId: 0
+export class GroupsComponent implements OnInit {
 
-  }]
+  public groups: Group[] = []
+
+  constructor(private backend: HttpClientService){
+    this.refresh();
+  }
+
+  refresh(){
+    this.backend.getGroups().subscribe(
+      groups => this.groups = groups
+    )
+  }
+
+  ngOnInit(): void {
+    throw new Error('Method not implemented.');
+  }
+
+
+
 }

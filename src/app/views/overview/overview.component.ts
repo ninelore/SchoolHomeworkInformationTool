@@ -14,7 +14,11 @@ import { forkJoin } from 'rxjs';
   styleUrls: ['./overview.component.scss']
 })
 export class OverviewComponent {
-  onSaveCallback: (newSubs: EventSubscription[], deletedSubs: EventSubscription[], updatedSubs: EventSubscription[]) => void
+  subscriptionSaveCallback: (newSubs: EventSubscription[], deletedSubs: EventSubscription[], updatedSubs: EventSubscription[]) => void
+
+  eventSaveCallback: (event:ShitEvent) => void
+  eventUpdateCallback: (event:ShitEvent) => void
+  eventDeleteCallback: (event:ShitEvent) => void
 
   private readonly SubcriptionModalId = "subscriptionModal";
 
@@ -29,7 +33,7 @@ export class OverviewComponent {
   constructor(private backend: HttpClientService, private router: Router, private accountService: AccountService) {
     this.refresh();
 
-    this.onSaveCallback = (newSubs: EventSubscription[], deletedSubs: EventSubscription[], updatedSubs: EventSubscription[]) => {
+    this.subscriptionSaveCallback = (newSubs: EventSubscription[], deletedSubs: EventSubscription[], updatedSubs: EventSubscription[]) => {
       console.log("onSaveCallback", newSubs, deletedSubs, updatedSubs)
 
       forkJoin([
@@ -40,6 +44,31 @@ export class OverviewComponent {
           console.log("onSaveCallback", newSubs, deletedSubs)
           this.refresh();
         }
+      )
+    }
+  
+
+
+    this.eventSaveCallback = (event:ShitEvent) => {
+      this.backend.createEvent(event).subscribe(
+        () => this.refresh()
+      )
+    }
+
+    this.eventUpdateCallback = (event:ShitEvent) => {
+      // this.backend.updateEvent(event).subscribe(
+      //   () => this.refresh()
+      // )
+      console.log("onUpdateCallback", event)
+      this.backend.updateEvent(event).subscribe(
+        () => this.refresh()
+      )
+    }
+
+    this.eventDeleteCallback = (event:ShitEvent) => {
+      console.log("onDeleteCallback", event)
+      this.backend.deleteEvent(event).subscribe(
+        () => this.refresh()
       )
     }
   }
@@ -109,6 +138,13 @@ export class OverviewComponent {
 
   }
 
+  editEventFn(event: ShitEvent) {
+    return () => {
+      this.selectedEvent = event;
+
+    }
+  }
+
   subscribeFn(event: ShitEvent) {
 
     // TODO: open subscription form/modal
@@ -133,7 +169,8 @@ export class OverviewComponent {
   create() {
     // TODO: enable real function
     // this.router.navigate(['/form'], { queryParams: { mode: 'create' }});
-    //return
+    this.selectedEvent = null;
+    return
     // TMP code
     const rnd = Math.round(Math.random() * 1337);
     const event = {
