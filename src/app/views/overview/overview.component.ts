@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { AccountService } from 'src/app/service/account.service';
 import { EventSubscription } from 'src/app/models/event-subscription';
 import { bootstrapApplication } from '@angular/platform-browser';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-overview',
@@ -13,7 +14,7 @@ import { bootstrapApplication } from '@angular/platform-browser';
   styleUrls: ['./overview.component.scss']
 })
 export class OverviewComponent {
-  onSaveCallback:(newSubs: EventSubscription[], deletedSubs: EventSubscription[], updatedSubs: EventSubscription[]) => void
+  onSaveCallback: (newSubs: EventSubscription[], deletedSubs: EventSubscription[], updatedSubs: EventSubscription[]) => void
 
   private readonly SubcriptionModalId = "subscriptionModal";
 
@@ -23,13 +24,17 @@ export class OverviewComponent {
   textFilter: string = ""
   subscriptions: EventSubscription[] = [];
   selectedEvent: ShitEvent | null = null;
+  selectedSubscriptions: EventSubscription[] = [];
+
 
   public refresh() {
-    this.backend.getEvents().subscribe(
-      events => this.events = events
-    )
-    this.backend.getSubscriptions().subscribe(
-      subscriptions => this.subscriptions = subscriptions
+    forkJoin([this.backend.getEvents(), this.backend.getSubscriptions()]).subscribe(
+      ([events, subscriptions]) => {
+        this.events = events;
+        this.subscriptions = subscriptions
+        this.selectedSubscriptions = this.subscriptions.filter(sub => (this.selectedEvent !== null && sub.eventId === this.selectedEvent.id))
+        this.updateShownEvents();
+      }
     )
   }
 
@@ -37,23 +42,17 @@ export class OverviewComponent {
     this.refresh();
 
     this.onSaveCallback = (newSubs: EventSubscription[], deletedSubs: EventSubscription[], updatedSubs: EventSubscription[]) => {
-      console.log("onSaveCallback",newSubs, deletedSubs, updatedSubs)
-      newSubs.forEach(newSub => {
-        this.backend.subscribe(newSub).subscribe(data=>{
-          // TODO handle errors
-          console.log(data);
-        });
-      })
+      console.log("onSaveCallback", newSubs, deletedSubs, updatedSubs)
 
-      deletedSubs.forEach(deletedSub => {
-        this.backend.unsubscribe(deletedSub).subscribe(data=>{
-          // TODO handle errors
-          console.log(data);
-        })
-      })
-
-      // TODO: call after all subscriptions are saved or deleted
-      this.refresh();
+      forkJoin([
+        ...newSubs.map(newSub => this.backend.subscribe(newSub)),
+        ...deletedSubs.map(deletedSub => this.backend.unsubscribe(deletedSub))
+      ]).subscribe(
+        ([newSubs, deletedSubs]) => {
+          console.log("onSaveCallback", newSubs, deletedSubs)
+          this.refresh();
+        }
+      )
     }
 
 
@@ -104,6 +103,8 @@ export class OverviewComponent {
 
     return () => {
       this.selectedEvent = event;
+      this.selectedSubscriptions = this.subscriptions.filter(subscription => subscription.eventId === event.id);
+
       this.refresh();
     }
 
@@ -114,6 +115,7 @@ export class OverviewComponent {
     // TODO: open subscription form/modal
     return () => {
       this.selectedEvent = event;
+      this.selectedSubscriptions = this.subscriptions.filter(subscription => subscription.eventId === event.id);
 
       this.refresh();
     }
@@ -127,23 +129,27 @@ export class OverviewComponent {
     // TODO: Enable read function
     // return this.accountService.getUser();
 
-    return 1337;
+    return this.accountService.getUser()?.id;
   }
   create() {
     // TODO: enable real function
     // this.router.navigate(['/form'], { queryParams: { mode: 'create' }});
-
+    return
     // TMP code
+    const rnd = Math.round(Math.random() * 1337);
     const event = {
       id: -1,
-      name: `Random Event ${Math.round(Math.random() * 1337)}`,
+      name: `Random Event ${rnd}`,
       groupId: 1,
-      creatorId: this.accountService.getUser()?.id,
-      description: `Random Event ${Math.round(Math.random() * 1337)}`,
+      creatorId: this.accountService.getUser()?.id ?? undefined,
+      description: `Random Event ${rnd}`,
       date: new Date(Math.round(Date.now() + Math.random() * 14 * (24 * 60 * 60 * 1000))).toISOString(),
+      reminderAmount: 1,
+      reminderUnit: "DAY" as "WEEK" | "HOUR" | "DAY",
+      eventType: null
     }
-    this.backend.createEvent(event).subscribe(data=>{
-      console.log("createEvent",data)
+    this.backend.createEvent(event).subscribe(data => {
+      console.log("createEvent", data)
     })
 
   }

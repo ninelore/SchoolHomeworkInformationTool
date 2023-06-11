@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { EventSubscription } from '../models/event-subscription';
 import { AccountService } from './account.service';
 import { environment } from '../../environments/environment';
+import { Group } from '../models/group';
 
 @Injectable({
   providedIn: 'root'
@@ -13,14 +14,16 @@ import { environment } from '../../environments/environment';
 export class HttpClientService implements HttpClientInterface {
 
   private static readonly basePath = environment.serviceUrl + "/rest/shit"
-  private static readonly getEventsUrl = HttpClientService.basePath +  "/getEvents"
-  private static readonly createEventsUrl = HttpClientService.basePath +  "/createEvent"
+  private static readonly getEventsUrl = HttpClientService.basePath + "/getEvents"
+  private static readonly createEventsUrl = HttpClientService.basePath + "/createEvent"
   private static readonly getSubscriptionUrl = HttpClientService.basePath + "/getEventSubscriptions"
   private static readonly createSubscriptionUrl = HttpClientService.basePath + "/createEventSubscription"
   private static readonly deleteSubscriptionUrl = HttpClientService.basePath + "/deleteEventSubscriptions"
+  private static readonly getGroupsUrl = HttpClientService.basePath + "/getGroups"
+  private static readonly createGroupUrl = HttpClientService.basePath + "/createGroup"
+
 
   constructor(private http: HttpClient, private accountService: AccountService) { }
-
 
 
   private get<C>(url: string) {
@@ -56,7 +59,7 @@ export class HttpClientService implements HttpClientInterface {
   public getEvents() {
 
     const user = this.accountService.getUser();
-    if(!user) {
+    if (!user) {
       alert("User not logged in");
       return new Observable<ShitEvent[]>((observer) => {
         observer.next([]);
@@ -99,6 +102,13 @@ export class HttpClientService implements HttpClientInterface {
 
   unsubscribe(subscription: EventSubscription): Observable<ShitServerResponse> {
     return this.delete<ShitServerResponse>(HttpClientService.deleteSubscriptionUrl + `/${subscription.id}`);
+  }
+
+  getGroups(): Observable<Group[]> {
+    return this.get(HttpClientService.getGroupsUrl);
+  }
+  createGroup(group: Group): Observable<ShitServerResponse> {
+    return this.post(HttpClientService.createGroupUrl, group);
   }
 
 }

@@ -3,11 +3,18 @@ import { HttpClientInterface, ShitServerResponse } from './http-client.interface
 import { Observable } from 'rxjs';
 import { ShitEvent } from '../models/shit-event';
 import { EventSubscription } from '../models/event-subscription';
+import { Group } from '../models/group';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FakeHttpClientService implements HttpClientInterface {
+  getGroups(): Observable<Group[]> {
+    throw new Error('Method not implemented.');
+  }
+  createGroup(group: Group): Observable<ShitServerResponse> {
+    throw new Error('Method not implemented.');
+  }
 
   private fakeUSerId = 1337;
   private eventCounter = 0;
@@ -17,13 +24,23 @@ export class FakeHttpClientService implements HttpClientInterface {
       id: 0,
       name: "Event 1",
       description: "Description 1",
-      date: new Date("2023-05-30").toISOString()
+      date: new Date("2023-05-30").toISOString(),
+      reminderAmount: 1,
+      reminderUnit: "DAY",
+      creatorId: this.fakeUSerId,
+      groupId: 0,
+      eventType: null
     },
     {
       id: 1,
       name: "Event 2",
       description: "Description 2",
-      date: new Date("2023-06-27").toISOString()
+      date: new Date("2023-06-27").toISOString(),
+      reminderAmount: 1,
+      reminderUnit: "DAY",
+      creatorId: this.fakeUSerId,
+      groupId: 0,
+      eventType: null
     }
   ]
 

@@ -1,1 +1,15 @@
-<p>groups works!</p>
+<div class="">
+    <h1>Groups</h1>
+    <div class="row d-flex mt-3 mx-1">
+        <table>
+            <thead>
+                <th>Name</th>
+                <th>Group ID</th>
+                <th>Owner</th>
+                <th>Giuld ID</th>
+                <th>Notify Channel</th>
+            </thead>
+            <tr   class="col-2" *ngFor="let group of groups" group-row [group]="group"></tr>
+        </table>
+    </div>
+</div>

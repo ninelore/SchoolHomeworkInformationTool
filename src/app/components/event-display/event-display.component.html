@@ -6,7 +6,7 @@
         </div>
         <p class="card-text">{{event?.description ?? "No Description"}}</p>
         <p class="">{{(parseDate(event?.date)) ?? "No Date"}}</p>
-        <button *ngIf="!subscribed" class="btn btn-primary container" (click)="subscribe()" data-bs-toggle="modal" data-bs-target="#exampleModal">Subscribe</button>
-        <button *ngIf="subscribed" class="btn container" (click)="editSubscription()" data-bs-toggle="modal" data-bs-target="#exampleModal">Edit subscribtions</button>
+        <button *ngIf="!subscribed" class="btn btn-primary container" (click)="subscribe()" data-bs-toggle="modal" data-bs-target="#subscription-modal">Subscribe</button>
+        <button *ngIf="subscribed" class="btn container" (click)="editSubscription()" data-bs-toggle="modal" data-bs-target="#subscription-modal">Edit subscribtions</button>
     </div>
 </div>

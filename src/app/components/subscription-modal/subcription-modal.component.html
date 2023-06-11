@@ -1,19 +1,19 @@
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="subscription-modal" tabindex="-1" aria-labelledby="subscription-modal-label" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Edit subscriptions</h5>
+                <h5 class="modal-title" id="subscription-modal-label">Edit subscriptions</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <!-- add notifiy on event if first subscription-->
                 <div *ngFor="let subscription of renderedSubsciptions" class="input-group">
-                    <select class="form-select" name="reminderUnit" id="" [disabled]="subscription.id>0" (change)="changeReminderUnit($event, subscription.id)">
+                    <select class="form-select" name="reminderUnit" id="" [disabled]="(subscription.id ?? -1)>0 " (change)="changeReminderUnit($event, (subscription.id ?? -1))">
                         <option value="DAY" [selected]="subscription.reminderUnit==='DAY'">Days</option>
                         <option value="HOUR" [selected]="subscription.reminderUnit==='HOUR'">Hours</option>
                         <option value="WEEK" [selected]="subscription.reminderUnit==='WEEK'">Weeks</option>
                     </select>
-                    <input type="number" class="form-control" [value]="subscription.reminderAmount" (change)="changeReminderAmount($event, subscription.id)">
+                    <input type="number" class="form-control" [value]="subscription.reminderAmount" (change)="changeReminderAmount($event, subscription.id ?? -1)">
                     <button aria-label="Delete" class="btn" (click)="deleteSubscription(subscription)">
                         <i class="fa fa-times"></i>
                     </button>

@@ -1,6 +1,7 @@
 import { Observable } from "rxjs";
 import { ShitEvent } from "../models/shit-event";
 import { EventSubscription } from "../models/event-subscription";
+import { Group } from "../models/group";
 
 export interface ShitServerResponse {
     status: string;
@@ -21,6 +22,11 @@ export interface HttpClientInterface {
     // deleteEvent
 
     // getGroups
+    getGroups(): Observable<Group[]>;
+    // addGroup
+    createGroup(group: Group): Observable<ShitServerResponse>;
+
+    // addUserToGroup
 
     // getUserInfo
 

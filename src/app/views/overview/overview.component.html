@@ -1,4 +1,5 @@
-<app-subcription-modal [event]="selectedEvent" [onSaveCallback]="onSaveCallback" [subscriptions]="subscriptions"></app-subcription-modal>
+<app-subcription-modal [event]="selectedEvent" [onSaveCallback]="onSaveCallback" [subscriptions]="selectedSubscriptions"></app-subcription-modal>
+<app-create-event-modal></app-create-event-modal>
 <div class="row d-flex">
     <div class="input-group flex-grow-1">
         <input class="form-control" type="text" placeholder="Search" (input)="search($event)">
@@ -15,14 +16,14 @@
     </div>
 
     <div class="input-group flex-shrink-1">
-        <a class="btn btn-primary" (click)="create()">Create New</a>
+        <a class="btn btn-primary" (click)="create()"  data-bs-toggle="modal" data-bs-target="#edit-event-modal">Create New</a>
     </div>
 </div>
 
 <div class="row d-flex mt-3">
 
 
-    <app-event-display class="col-2" *ngFor="let event of events" [event]="event"
+    <app-event-display class="col-2" *ngFor="let event of shownEvents" [event]="event"
         [created]="event.creatorId === getUser()" [subscribed]="hasSubscribed(event)"
         [subscribe]="subscribeFn(event)" [editSubscription]="editSubscriptionFn(event)" ></app-event-display>
 

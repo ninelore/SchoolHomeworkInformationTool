@@ -17,6 +17,8 @@ import {HttpClientModule} from "@angular/common/http";
 import { UserSettingsComponent } from './views/user-settings/user-settings.component';
 import { GroupsComponent } from './views/groups/groups.component';
 import { IndexComponent } from './components/index/index.component';
+import { CreateEventModalComponent } from './components/create-event-modal/create-event-modal.component';
+import { GroupDisplayComponent } from './components/group-display/group-display.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,9 @@ import { IndexComponent } from './components/index/index.component';
     EventFormComponent,
     UserSettingsComponent,
     GroupsComponent,
-    IndexComponent
+    IndexComponent,
+    CreateEventModalComponent,
+    GroupDisplayComponent
   ],
   imports: [
     BrowserModule,
