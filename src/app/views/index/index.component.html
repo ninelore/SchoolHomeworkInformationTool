@@ -1,0 +1,36 @@
+<div class="row my-5">
+  <h1 class="text-center superbig">Welcome back {{this.getName()}}!</h1>
+  <div class="m-3"></div>
+  <div class="col-12 col-md-8 offset-md-2">
+    <div class="card my-3">
+      <div class="card-header">
+        <span class="fs-3 ms-1">Upcoming Events</span>
+      </div>
+      <div class="card-body">
+        <ul>
+          <!-- *ngFor="" -->
+          <ng-component>
+            <li>Event</li>
+          </ng-component>
+        </ul>
+      </div>
+      <div class="card-footer p-0">
+        <div class="d-grid">
+          <a routerLink="/events" class="btn btn-outline-primary btn-noborder m-0 text-end fs-5">
+            Show all events
+            <i class="fa fa-arrow-right mx-2"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="row g-3">
+      <div class="col-6 d-grid">
+        <a routerLink="/events" class="btn btn-outline-primary fs-4 py-3">Event Overview</a>
+      </div>
+      <div class="col-6 d-grid">
+        <a routerLink="" class="btn btn-outline-primary fs-4 py-3">Your Groups</a>
+      </div>
+    </div>
+  </div>
+</div>

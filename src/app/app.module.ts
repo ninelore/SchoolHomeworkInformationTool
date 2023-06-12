@@ -16,7 +16,7 @@ import {MatToolbarModule} from "@angular/material/toolbar";
 import {HttpClientModule} from "@angular/common/http";
 import { UserSettingsComponent } from './views/user-settings/user-settings.component';
 import { GroupsComponent } from './views/groups/groups.component';
-import { IndexComponent } from './components/index/index.component';
+import { IndexComponent } from './views/index/index.component';
 import { CreateEventModalComponent } from './components/create-event-modal/create-event-modal.component';
 import { GroupDisplayComponent } from './components/group-display/group-display.component';
 import { EditGroupModalComponent } from './components/edit-group-modal/edit-group-modal.component';
