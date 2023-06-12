@@ -28,6 +28,7 @@ export class FakeHttpClientService implements HttpClientInterface {
   getGroups(): Observable<Group[]> {
     return new Observable<Group[]>((observer) => {
       observer.next(this.groups);
+      observer.complete();
     })
   }
   createGroup(group: Group): Observable<ShitServerResponse> {
@@ -44,11 +45,13 @@ export class FakeHttpClientService implements HttpClientInterface {
         status: "success",
         data: {}
       });
+      observer.complete();
+
     })
 
   }
 
-  private fakeUSerId = 1337;
+  private fakeUSerId = 1;
   private eventCounter = 2;
   private subscriptionCounter = 0;
   private groupCounter = -1;
@@ -95,6 +98,8 @@ export class FakeHttpClientService implements HttpClientInterface {
       observer.next(
         this.events
       );
+      observer.complete();
+
     })
   }
 
@@ -109,6 +114,7 @@ export class FakeHttpClientService implements HttpClientInterface {
         observer.next({
           status: "success"
         });
+        observer.complete();
       });
   }
 
@@ -131,6 +137,7 @@ export class FakeHttpClientService implements HttpClientInterface {
       observer.next(
         this.subscrtions
       );
+      observer.complete();
     })
 
   }
@@ -145,6 +152,7 @@ export class FakeHttpClientService implements HttpClientInterface {
         status: "success",
         data: {}
       });
+      observer.complete();
     })
 
   }
