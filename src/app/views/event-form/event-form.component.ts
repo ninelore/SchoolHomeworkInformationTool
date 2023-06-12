@@ -1,4 +1,5 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Group } from 'src/app/models/group';
 import { ShitEvent } from 'src/app/models/shit-event';
 import { HttpClientService } from 'src/app/service/http-client.service';
 
@@ -10,7 +11,7 @@ import { HttpClientService } from 'src/app/service/http-client.service';
 export class EventFormComponent {
 
   @Input() event: ShitEvent;
-
+  @Input() groups: Group[];
   @Input() onEventDelete:(event:ShitEvent)=>void;
   @Input() updateCallback:(event:ShitEvent)=>void;
 

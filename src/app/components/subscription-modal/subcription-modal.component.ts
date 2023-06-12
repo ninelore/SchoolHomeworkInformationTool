@@ -1,5 +1,6 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { EventSubscription } from 'src/app/models/event-subscription';
+import { Group } from 'src/app/models/group';
 import { ShitEvent } from 'src/app/models/shit-event';
 import { AccountService } from 'src/app/service/account.service';
 

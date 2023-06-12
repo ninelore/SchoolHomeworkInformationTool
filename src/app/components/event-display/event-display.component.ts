@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Group } from 'src/app/models/group';
 import { ShitEvent } from 'src/app/models/shit-event';
 
 @Component({
@@ -19,4 +20,5 @@ export class EventDisplayComponent {
   @Input() public subscribe: () => void = () => { };
   @Input() public editSubscription: () => void = () => { };
   @Input() public edit: (event: ShitEvent | null | undefined) => void = () => { };
+  @Input() public group: Group| null = null;
 }

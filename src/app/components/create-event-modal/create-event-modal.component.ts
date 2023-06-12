@@ -1,4 +1,5 @@
 import { Component, Input, SimpleChanges } from '@angular/core';
+import { Group } from 'src/app/models/group';
 import { ShitEvent } from 'src/app/models/shit-event';
 
 @Component({
@@ -9,6 +10,8 @@ import { ShitEvent } from 'src/app/models/shit-event';
 export class CreateEventModalComponent {
 
   @Input() public originalEvent: ShitEvent | null;
+  @Input() public groups: Group[] = [];
+
   @Input() public onEventCreate: (event:ShitEvent)=>void;
   @Input() public onEventUpdate: (event:ShitEvent)=>void;
   @Input() public onEventDelete: (event:ShitEvent)=>void;
@@ -43,7 +46,7 @@ export class CreateEventModalComponent {
       return
     }
 
-    if (changes["originalEvent"].currentValue !== null && this.editedEvent !== null){
+    if (changes["originalEvent"] && changes["originalEvent"].currentValue !== null && this.editedEvent !== null){
       const crr = changes["originalEvent"].currentValue
       this.editedEvent.id = crr.id
       this.editedEvent.name = crr.name

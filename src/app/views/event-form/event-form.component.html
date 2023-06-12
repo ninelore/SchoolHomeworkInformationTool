@@ -12,9 +12,12 @@
 
     <div class="col-12">
         <label for="group">Group:</label>
-        <!-- TODO: Change to select | change class to 'form-select'-->
-        <input id="group" class="form-control" name="group" type="number" value="{{event.groupId ?? ''}}"
+        <select id="group" class="form-select" name="group" type="number" value="{{event.groupId ?? ''}}"
             (change)="updateGroup($event)">
+            <!-- TODO: make event not saveable if no group is selected -->
+            <option value="" selected disabled hidden>Choose group</option>
+            <option  *ngFor="let group of groups" value="{{group.id}}" [selected]="event.groupId === group.id">{{group.name}}</option>
+        </select>
     </div>
 
     <div class="col-12">

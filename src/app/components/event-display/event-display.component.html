@@ -4,6 +4,7 @@
             <h3 class="card-title">{{event?.name ?? "No Name"}}</h3>
             <button *ngIf="created" class="btn" (click)="edit(event)" data-bs-toggle="modal" data-bs-target="#edit-event-modal">Edit</button>
         </div>
+        <div>{{group?.name??""}}</div>
         <p class="card-text">{{event?.description ?? "No Description"}}</p>
         <p class="">{{(parseDate(event?.date)) ?? "No Date"}}</p>
         <button *ngIf="!subscribed" class="btn btn-primary container" (click)="subscribe()" data-bs-toggle="modal" data-bs-target="#subscription-modal">Subscribe</button>

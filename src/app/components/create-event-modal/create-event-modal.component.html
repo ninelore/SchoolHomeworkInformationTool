@@ -8,7 +8,7 @@
             </div>
             <div class="modal-body">
                 <!-- add notifiy on event if first subscription-->
-                <app-event-form [event]="editedEvent" [onEventDelete]="deleteFn()"></app-event-form> 
+                <app-event-form [event]="editedEvent" [groups]="groups" [onEventDelete]="deleteFn()"></app-event-form> 
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="cancel()">Cancel</button>

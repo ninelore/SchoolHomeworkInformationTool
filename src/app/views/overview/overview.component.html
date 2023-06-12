@@ -1,10 +1,10 @@
 <div class="row">
     <div class="col-12">
         <app-subcription-modal [event]="selectedEvent" [onSaveCallback]="subscriptionSaveCallback"
-            [subscriptions]="selectedSubscriptions"></app-subcription-modal>
+            [subscriptions]="selectedSubscriptions" ></app-subcription-modal>
 
         <app-create-event-modal [originalEvent]="selectedEvent" [onEventCreate]="eventSaveCallback"
-            [onEventUpdate]="eventUpdateCallback" [onEventDelete]="eventDeleteCallback"></app-create-event-modal>
+            [onEventUpdate]="eventUpdateCallback" [onEventDelete]="eventDeleteCallback" [groups]="selectEventGroups"></app-create-event-modal>
 
         <div class="row">
             <div class="col">
@@ -31,7 +31,7 @@
             <app-event-display class="col-2" *ngFor="let event of shownEvents" [event]="event"
                 [created]="event.creatorId === getUser()" [subscribed]="hasSubscribed(event)"
                 [subscribe]="subscribeFn(event)" [editSubscription]="editSubscriptionFn(event)"
-                [edit]="editEventFn(event)"></app-event-display>
+                [edit]="editEventFn(event)"  [group]="groupForEvent(event)"></app-event-display>
 
             <!-- the following event-displays are only for layout variants testing -->
             <!-- <app-event-display class="col-2" *ngFor="let event of events" [event]="event" [created]="true" ></app-event-display>

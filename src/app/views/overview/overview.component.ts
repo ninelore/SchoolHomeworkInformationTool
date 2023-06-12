@@ -5,8 +5,8 @@ import { FakeHttpClientService } from 'src/app/service/fake-http-client.service'
 import { Router } from '@angular/router';
 import { AccountService } from 'src/app/service/account.service';
 import { EventSubscription } from 'src/app/models/event-subscription';
-import { bootstrapApplication } from '@angular/platform-browser';
 import { forkJoin } from 'rxjs';
+import { Group } from 'src/app/models/group';
 
 @Component({
   selector: 'app-overview',
@@ -16,9 +16,9 @@ import { forkJoin } from 'rxjs';
 export class OverviewComponent {
   subscriptionSaveCallback: (newSubs: EventSubscription[], deletedSubs: EventSubscription[], updatedSubs: EventSubscription[]) => void
 
-  eventSaveCallback: (event:ShitEvent) => void
-  eventUpdateCallback: (event:ShitEvent) => void
-  eventDeleteCallback: (event:ShitEvent) => void
+  eventSaveCallback: (event: ShitEvent) => void
+  eventUpdateCallback: (event: ShitEvent) => void
+  eventDeleteCallback: (event: ShitEvent) => void
 
   private readonly SubcriptionModalId = "subscriptionModal";
 
@@ -29,8 +29,9 @@ export class OverviewComponent {
   subscriptions: EventSubscription[] = [];
   selectedEvent: ShitEvent | null = null;
   selectedSubscriptions: EventSubscription[] = [];
+  selectEventGroups: Group[] = [];
 
-  constructor(private backend: FakeHttpClientService, private router: Router, private accountService: AccountService) {
+  constructor(private backend: HttpClientService, private router: Router, private accountService: AccountService) {
     this.refresh();
 
     this.subscriptionSaveCallback = (newSubs: EventSubscription[], deletedSubs: EventSubscription[], updatedSubs: EventSubscription[]) => {
@@ -46,16 +47,16 @@ export class OverviewComponent {
         }
       )
     }
-  
 
 
-    this.eventSaveCallback = (event:ShitEvent) => {
+
+    this.eventSaveCallback = (event: ShitEvent) => {
       this.backend.createEvent(event).subscribe(
         () => this.refresh()
       )
     }
 
-    this.eventUpdateCallback = (event:ShitEvent) => {
+    this.eventUpdateCallback = (event: ShitEvent) => {
       // this.backend.updateEvent(event).subscribe(
       //   () => this.refresh()
       // )
@@ -65,7 +66,7 @@ export class OverviewComponent {
       )
     }
 
-    this.eventDeleteCallback = (event:ShitEvent) => {
+    this.eventDeleteCallback = (event: ShitEvent) => {
       console.log("onDeleteCallback", event)
       this.backend.deleteEvent(event).subscribe(
         () => this.refresh()
@@ -74,17 +75,18 @@ export class OverviewComponent {
   }
 
   public refresh() {
-    forkJoin([this.backend.getEvents(), this.backend.getSubscriptions()]).subscribe(
-      ([events, subscriptions]) => {
+    forkJoin([this.backend.getEvents(), this.backend.getSubscriptions(), this.backend.getGroups()]).subscribe(
+      ([events, subscriptions,groups]) => {
         this.events = events;
         this.subscriptions = subscriptions
+        this.selectEventGroups = groups
         this.selectedSubscriptions = this.subscriptions.filter(sub => (this.selectedEvent !== null && sub.eventId === this.selectedEvent.id))
         this.updateShownEvents();
       }
     )
   }
 
-  
+
 
   public search(event: Event) {
     const value = (event.target as HTMLInputElement).value ?? "";
@@ -130,7 +132,7 @@ export class OverviewComponent {
     // TODO: open subscription form/modal
 
     return () => {
-      this.selectedEvent = event;
+      this.selectEvent(event);
       this.selectedSubscriptions = this.subscriptions.filter(subscription => subscription.eventId === event.id);
 
       this.refresh();
@@ -140,11 +142,23 @@ export class OverviewComponent {
 
   editEventFn(event: ShitEvent) {
     return () => {
-      this.selectedEvent = event;
+      this.selectEvent(event);
 
+      this.backend.getGroups().subscribe(
+        groups=>{
+          this.selectEventGroups = groups;
+        }
+      )
     }
   }
 
+  groupForEvent(event: ShitEvent): Group | null {
+    return this.selectEventGroups.find(group => group.id === event.groupId) ?? null
+  }
+
+  private selectEvent(event: ShitEvent) {
+    this.selectedEvent = event
+  }
   subscribeFn(event: ShitEvent) {
 
     // TODO: open subscription form/modal
@@ -170,6 +184,11 @@ export class OverviewComponent {
     // TODO: enable real function
     // this.router.navigate(['/form'], { queryParams: { mode: 'create' }});
     this.selectedEvent = null;
+    this.backend.getGroups().subscribe(
+      groups=>{
+        this.selectEventGroups = groups;
+      }
+    )
     return
     // TMP code
     const rnd = Math.round(Math.random() * 1337);
