@@ -6,27 +6,37 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div>Group info:</div>
                 <div>Group name:</div>
-                <input type="text" class="form-control"  value="{{editingGroup.name}}" (change)="onGroupNameChange($event)"/>
+                <input type="text" class="form-control" value="{{editingGroup.name}}"
+                    (change)="onGroupNameChange($event)" />
                 <div>Group id: {{editingGroup.id}}</div>
                 <div>Guild Id:</div>
-                <input type="text" class="form-control"  value="{{editingGroup.discordGuidId}}" (change)="onGuildIdChange($event)"/>
+                <input type="text" class="form-control" value="{{editingGroup.discordGuidId}}"
+                    (change)="onGuildIdChange($event)" />
                 <div>Notify channel:</div>
-                <input type="text" class="form-control"  value="{{editingGroup.discordNotifyChannelId}}" (change)="onNotifyChannelChange($event)"/>
+                <input type="text" class="form-control" value="{{editingGroup.discordNotifyChannelId}}"
+                    (change)="onNotifyChannelChange($event)" />
                 <div>Group users:</div>
-                
+
+                <div *ngFor="let user of finalUserList()" class="input-group">
+                    <div>{{user}}</div> <button class="btn btn-close" (click)="onRemoveUser(user)"></button>
+                </div>
+
                 <div>
-                    <button>Add User</button><input type="text" value="" placeholder="Username">
+                    <button class="btn btn-primary" (click)="onAddUser($event)">Add User</button><input type="text"
+                        value="" placeholder="Username" (change)="onUserNameChange($event)">
                 </div>
 
 
-                <button *ngIf="originalGroup" class="btn btn-danger" (click)="onDelete(editingGroup)">Delete Group</button>
+                <button *ngIf="originalGroup" class="btn btn-danger" (click)="onDelete(editingGroup)">Delete
+                    Group</button>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="onCancel(editingGroup)">Cancel</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                    (click)="onCancel(editingGroup)">Cancel</button>
                 <!-- TODO only close on successfull save (orginalGroup?onUpdate(editingGroup):onCreate(editingGroup)) -->
-                <button type="button" class="btn btn-primary"  data-bs-dismiss="modal" (click)="((originalGroup?onUpdate(editingGroup):onCreate(editingGroup)) )">{{(originalGroup?"Update":"Add")}}</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+                    (click)="((originalGroup?onUpdate(editingGroup,addedUsers,deletedUsers):onCreate(editingGroup,addedUsers)) )">{{(originalGroup?"Update":"Add")}}</button>
             </div>
         </div>
     </div>

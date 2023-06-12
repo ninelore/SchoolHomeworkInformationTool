@@ -30,7 +30,7 @@ export class OverviewComponent {
   selectedEvent: ShitEvent | null = null;
   selectedSubscriptions: EventSubscription[] = [];
 
-  constructor(private backend: HttpClientService, private router: Router, private accountService: AccountService) {
+  constructor(private backend: FakeHttpClientService, private router: Router, private accountService: AccountService) {
     this.refresh();
 
     this.subscriptionSaveCallback = (newSubs: EventSubscription[], deletedSubs: EventSubscription[], updatedSubs: EventSubscription[]) => {

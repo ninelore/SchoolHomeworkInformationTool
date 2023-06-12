@@ -31,6 +31,8 @@ export class HttpClientService implements HttpClientInterface {
   private static readonly updateGroupUrl = HttpClientService.basePath + "/editGroup"
 
   private static readonly addUserToGroupUrl = HttpClientService.basePath + "/createGroupMembership"
+  private static readonly addUserToGroupByNameUrl = HttpClientService.basePath + "/createGroupMembershipByName"
+
   private static readonly removeUserFromGroupUrl = HttpClientService.basePath + "/deleteGroupMembership"
 
 
@@ -163,8 +165,24 @@ export class HttpClientService implements HttpClientInterface {
   }
 
   updateGroup(group: Group): Observable<ShitServerResponse> {
+    const user = this.accountService.getUser();
+
+    if (!user || user.id === null) {
+      return new Observable<ShitServerResponse>((observer) => {
+        observer.next({
+          status: "error",
+          data: {
+            message: "User not logged in"
+          }
+        });
+      });
+    }
+    group.ownerUserId = user.id;
     return this.post(HttpClientService.updateGroupUrl, group);
   }
 
+  addUserToGroupByName(gm: GroupMembership,name: string): Observable<ShitServerResponse> {
+    return this.post(HttpClientService.addUserToGroupByNameUrl + `/${name}`, gm);
+  }
 }
 

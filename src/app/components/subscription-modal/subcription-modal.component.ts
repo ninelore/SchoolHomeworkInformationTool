@@ -23,7 +23,7 @@ export class SubcriptionModalComponent implements OnChanges, OnInit {
     this.newSubscriptions.filter(sub => sub.id === arg1)[0].reminderUnit = (value as "WEEK" | "HOUR" | "DAY");
 
   }
-  private static internalNewSubscriptionId = -1;
+  private static internalNewSubscriptionId = -2;
 
   @Input() public event: ShitEvent | null = null;
   @Input() public subscriptions: EventSubscription[] = [];
@@ -116,6 +116,8 @@ export class SubcriptionModalComponent implements OnChanges, OnInit {
 
   addDefaultSubscription() {
 
+    // disabled until bug fixed
+    return;
     if (this.subscriptions.length === 0) {
       this.newSubscriptions.push({
         eventId: this.event?.id ?? -1,
