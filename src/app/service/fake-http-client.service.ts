@@ -10,6 +10,9 @@ import { GroupMembership } from '../models/group-membership';
   providedIn: 'root'
 })
 export class FakeHttpClientService implements HttpClientInterface {
+  updateGroup(group: Group): Observable<ShitServerResponse> {
+    throw new Error('Method not implemented.');
+  }
   deleteEvent(event: ShitEvent): Observable<ShitServerResponse> {
     throw new Error('Method not implemented.');
   }

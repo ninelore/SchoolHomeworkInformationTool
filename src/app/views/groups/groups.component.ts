@@ -11,20 +11,58 @@ export class GroupsComponent implements OnInit {
 
   public groups: Group[] = []
 
-  constructor(private backend: HttpClientService){
+  selectedGroup: Group | null = null;
+
+  constructor(private backend: HttpClientService) {
     this.refresh();
   }
 
-  refresh(){
+  refresh() {
     this.backend.getGroups().subscribe(
       groups => this.groups = groups
     )
   }
 
-  ngOnInit(): void {
-    throw new Error('Method not implemented.');
+  onCreateGroupFn() {
+    return (group: Group) => {
+      this.backend.createGroup(group).subscribe(
+        () => this.refresh()
+      )
+    }
+  }
+
+  onUpdateGroupFn() {
+    return (group: Group) => {
+      this.backend.updateGroup(group).subscribe(
+        () => this.refresh()
+      )
+    }
+
+  }
+
+  onDeleteGroupFn() {
+    return (group: Group) => {
+      this.backend.deleteGroup(group).subscribe(
+        () => this.refresh()
+      )
+    }
+  }
+
+  onAddGroup() {
+    this.selectedGroup = null
+  }
+
+  onEditFn(group: Group) {
+    return () => {
+      this.selectedGroup = group
+    }
   }
 
 
+
+  ngOnInit(): void {
+
+
+  }
 
 }

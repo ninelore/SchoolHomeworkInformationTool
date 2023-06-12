@@ -54,7 +54,6 @@ export class CreateEventModalComponent {
       this.editedEvent.reminderUnit = crr.reminderUnit
       this.editedEvent.creatorId = crr.creatorId
       this.editedEvent.groupId = crr.groupId
-
     }
 
   }
