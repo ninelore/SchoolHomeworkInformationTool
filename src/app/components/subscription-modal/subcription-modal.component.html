@@ -1,4 +1,5 @@
-<div class="modal fade" id="subscription-modal" tabindex="-1" aria-labelledby="subscription-modal-label" aria-hidden="true">
+<div class="modal fade" id="subscription-modal" tabindex="-1" aria-labelledby="subscription-modal-label"
+    aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -7,22 +8,42 @@
             </div>
             <div class="modal-body">
                 <!-- add notifiy on event if first subscription-->
-                <div *ngFor="let subscription of renderedSubsciptions" class="input-group">
-                    <select class="form-select" name="reminderUnit" id="" [disabled]="(subscription.id ?? -1)>0 " (change)="changeReminderUnit($event, (subscription.id ?? -1))">
-                        <option value="DAY" [selected]="subscription.reminderUnit==='DAY'">Days</option>
-                        <option value="HOUR" [selected]="subscription.reminderUnit==='HOUR'">Hours</option>
-                        <option value="WEEK" [selected]="subscription.reminderUnit==='WEEK'">Weeks</option>
-                    </select>
-                    <input type="number" class="form-control" [value]="subscription.reminderAmount" (change)="changeReminderAmount($event, subscription.id ?? -1)">
-                    <button aria-label="Delete" class="btn" (click)="deleteSubscription(subscription)">
-                        <i class="fa fa-times"></i>
-                    </button>
+                <div class="row">
+                    <p class="text-secondary text-center">Note: you cannot edit existing notifications!</p>
+                    <div class="col-12">
+                        <div *ngFor="let subscription of renderedSubsciptions" class="input-group mb-2">
+                            <input type="number" [disabled]="isNew(subscription)" class="form-control text-end"
+                                [value]="subscription.reminderAmount"
+                                (change)="changeReminderAmount($event, subscription.id ?? -1)">
+                            <select class="form-select" style="width: 5%;" name="reminderUnit" [disabled]="isNew(subscription)"
+                                (change)="changeReminderUnit($event, (subscription.id ?? -1))">
+                                <option value="DAY" [selected]="subscription.reminderUnit==='DAY'">Days</option>
+                                <option value="HOUR" [selected]="subscription.reminderUnit==='HOUR'">Hours</option>
+                                <option value="WEEK" [selected]="subscription.reminderUnit==='WEEK'">Weeks</option>
+                            </select>
+                            <button aria-label="Delete" class="btn btn-outline-primary"
+                                (click)="deleteSubscription(subscription)">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                        
+                    </div>
                 </div>
-                <button class="btn" (click)="createNewSubscription()">Add new notification</button>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="cancle()">Cancle</button>
-                <button type="button" class="btn btn-primary" (click)="save()">Save changes</button>
+                <div class="row">
+                    <div class="col-12 d-grid">
+                        <button class="btn" (click)="createNewSubscription()">Add new
+                            notification</button>
+                    </div>
+                </div>
+                <div class="row mt-3 g-2">
+                    <div class="col-6 d-grid">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                            (click)="cancle()">Close</button>
+                    </div>
+                    <div class="col-6 d-grid">
+                        <button type="button" class="btn btn-primary" (click)="save()">Save changes</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

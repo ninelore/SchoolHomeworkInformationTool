@@ -45,6 +45,14 @@ fa {
   box-shadow: none !important;
 }
 
+.w-10 {
+  width: 10%;
+}
+
+.modal-backdrop {
+  display: none !important;
+}
+
 button {
   border: none;
   background: none;
@@ -57,10 +65,6 @@ html, body {
 
 body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
-}
-
-.modal-backdrop {
-  display: none !important;
 }
 
 /////////////////////

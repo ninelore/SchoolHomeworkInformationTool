@@ -38,6 +38,10 @@ export class SubcriptionModalComponent implements OnChanges, OnInit {
     this.updateRenderedSubscrptions()
   }
 
+  isNew(sub: EventSubscription): boolean {
+    return !this.newSubscriptions.includes(sub);
+  }
+
   ngOnChanges(changes: SimpleChanges): void {
     console.log(changes)
     if (changes["event"]?.isFirstChange()) {
