@@ -1,41 +1,41 @@
-<app-subcription-modal [event]="selectedEvent" [onSaveCallback]="subscriptionSaveCallback"
-   [subscriptions]="selectedSubscriptions"></app-subcription-modal>
-
-    <app-create-event-modal [originalEvent]="selectedEvent" [onEventCreate]="eventSaveCallback"
-    [onEventUpdate]="eventUpdateCallback" [onEventDelete]="eventDeleteCallback"></app-create-event-modal>
-
 <div class="row">
-    <div class="col-11">
-        <div class="input-group">
-            <input class="form-control" type="text" placeholder="Search" (input)="search($event)">
-            <select class="form-select " name="sort" id="sort-events" (change)="changeSortMode($event)">
-                <option value="name">Sort by name</option>
-                <option value="nameR">Sort by name (reverse)</option>
+    <div class="col-12">
+        <app-subcription-modal [event]="selectedEvent" [onSaveCallback]="subscriptionSaveCallback"
+            [subscriptions]="selectedSubscriptions"></app-subcription-modal>
 
-                <option value="date" selected>Sort by date</option>
-                <option value="dateR">Sort by date (reverse)</option>
+        <app-create-event-modal [originalEvent]="selectedEvent" [onEventCreate]="eventSaveCallback"
+            [onEventUpdate]="eventUpdateCallback" [onEventDelete]="eventDeleteCallback"></app-create-event-modal>
 
-            </select>
-            <button class="btn btn-outline-primary" (click)="refresh()">Refresh</button>
+        <div class="row">
+            <div class="col">
+                <div class="input-group">
+                    <input class="form-control" type="text" placeholder="Search" (input)="search($event)">
+                    <select class="form-select " name="sort" id="sort-events" (change)="changeSortMode($event)">
+                        <option value="name">Sort by name</option>
+                        <option value="nameR">Sort by name (reverse)</option>
 
+                        <option value="date" selected>Sort by date</option>
+                        <option value="dateR">Sort by date (reverse)</option>
+                    </select>
+                    <button class="btn btn-outline-primary" (click)="refresh()">Refresh</button>
+                </div>
+            </div>
+
+            <div class="col-2 d-grid">
+                <a class="btn btn-primary" (click)="create()" data-bs-toggle="modal"
+                    data-bs-target="#edit-event-modal">Create New</a>
+            </div>
+        </div>
+
+        <div class="row d-flex mt-3">
+            <app-event-display class="col-2" *ngFor="let event of shownEvents" [event]="event"
+                [created]="event.creatorId === getUser()" [subscribed]="hasSubscribed(event)"
+                [subscribe]="subscribeFn(event)" [editSubscription]="editSubscriptionFn(event)"
+                [edit]="editEventFn(event)"></app-event-display>
+
+            <!-- the following event-displays are only for layout variants testing -->
+            <!-- <app-event-display class="col-2" *ngFor="let event of events" [event]="event" [created]="true" ></app-event-display>
+    <app-event-display class="col-2" *ngFor="let event of events" [event]="event" [subscribed]="true"></app-event-display> -->
         </div>
     </div>
-
-    <div class="col-1  d-grid">
-        <a class="btn btn-primary" (click)="create()" data-bs-toggle="modal" data-bs-target="#edit-event-modal">Create
-            New</a>
-    </div>
-</div>
-
-<div class="row d-flex mt-3">
-
-
-    <app-event-display class="col-2" *ngFor="let event of shownEvents" [event]="event"
-        [created]="event.creatorId === getUser()" [subscribed]="hasSubscribed(event)" [subscribe]="subscribeFn(event)"
-        [editSubscription]="editSubscriptionFn(event)" [edit]="editEventFn(event)"></app-event-display>
-
-
-    <!-- the following event-displays are only for layout variants testing -->
-    <!-- <app-event-display class="col-2" *ngFor="let event of events" [event]="event" [created]="true" ></app-event-display>
-    <app-event-display class="col-2" *ngFor="let event of events" [event]="event" [subscribed]="true"></app-event-display> -->
 </div>
