@@ -1,44 +1,50 @@
-<form class="m-3 col-1 row">
-    <label for="name">Name:
-        <input id="Name" name="name" value="{{event.name ?? ''}}" (change)="updateName($event)">
-    </label>
+<form class="p-3 col-12 row g-3">
+    <div class="col-12">
+        <label for="name">Name:</label>
+        <input id="Name" class="form-control" name="name" value="{{event.name ?? ''}}" (change)="updateName($event)">
+    </div>
 
-    <label for="date">Date:
-        <input id="date" type="datetime-local" value="{{event.date?.slice(0,16) ?? ''}}" (change)="updateDate($event)">
-    </label>
+    <div class="col-12">
+        <label for="date">Date:</label>
+        <input id="date" class="form-control" type="datetime-local" value="{{event.date?.slice(0,16) ?? ''}}"
+            (change)="updateDate($event)">
+    </div>
 
-    <label for="group">Group:
-        <!-- TODO: Change to select -->
-        <input id="group" name="group" type="number" value="{{event.groupId ?? ''}}" (change)="updateGroup($event)">
-    </label>
+    <div class="col-12">
+        <label for="group">Group:</label>
+        <!-- TODO: Change to select | change class to 'form-select'-->
+        <input id="group" class="form-control" name="group" type="number" value="{{event.groupId ?? ''}}"
+            (change)="updateGroup($event)">
+    </div>
 
-    <label for="eventType">
-        Event Type:
-        <select id="eventType" name="eventType" (change)="updateEventType($event)">
+    <div class="col-12">
+        <label for="eventType">Event Type:</label>
+        <select id="eventType" class="form-select" name="eventType" (change)="updateEventType($event)">
             <option value="HOMEWORK" [selected]="event.eventType === 'HOMEWORK'">Homework</option>
             <option value="EXAM" [selected]="event.eventType === 'EXAM'">Exam</option>
             <option value="" [selected]="event.eventType === null">Other</option>
         </select>
-    </label>
+    </div>
 
-    <label for="reminderAmount">
-        Reminder Amount:
-        <input id="reminderAmount" name="reminderAmount" value="{{event.reminderAmount }}" (change)="updateReminderAmount($event)">
-    </label>
+    <div class="col-12">
+        <label for="reminderAmount">Reminder Amount:</label>
+        <div class="input-group">
+            <input type="number" id="reminderAmount" class="form-control" name="reminderAmount"
+                value="{{event.reminderAmount }}" (change)="updateReminderAmount($event)">
+            <select id="reminderUnit" class="form-select" name="reminderUnit" value="{{event.reminderUnit }}"
+                (change)="updateReminderUnit($event)">
+                <option value="WEEK" [selected]="event.reminderUnit === 'WEEK'">Week</option>
+                <option value="HOUR" [selected]="event.reminderUnit === 'HOUR'">Hour</option>
+                <option value="DAY" [selected]="event.reminderUnit === 'DAY'">Day</option>
+            </select>
+        </div>
+    </div>
 
-    <label for="reminderUnit">
-        Reminder Unit:
-        <select id="reminderUnit" name="reminderUnit" value="{{event.reminderUnit }}" (change)="updateReminderUnit($event)">
-            <option value="WEEK" [selected]="event.reminderUnit === 'WEEK'">Week</option>
-            <option value="HOUR" [selected]="event.reminderUnit === 'HOUR'">Hour</option>
-            <option value="DAY" [selected]="event.reminderUnit === 'DAY'">Day</option>
-        </select>
-    </label>
-
-    <label class="" for=" description">Description:
-        <textarea id="description" name="description"
+    <div class="col-12">
+        <label class="" for=" description">Description: </label>
+        <textarea id="description" class="form-control" name="description"
             (change)="updateDescription($event)">{{event.description ?? ''}}</textarea>
-    </label>
+    </div>
 </form>
 
 <!--   
@@ -51,4 +57,5 @@
     reminderAmount: number;
     reminderUnit: "WEEK"|"HOUR"|"DAY";-->
 
-<button *ngIf="event" type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#edit-event-modal" (click)="onEventDelete(event)">Delete</button>
+<button *ngIf="event.id !== 0" type="button" class="btn btn-outline-dark" data-bs-toggle="modal"
+    data-bs-target="#edit-event-modal" (click)="onEventDelete(event)">Delete</button>
