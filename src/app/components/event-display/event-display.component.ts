@@ -12,7 +12,7 @@ export class EventDisplayComponent {
     if (arg0 === undefined) {
       return;
     }
-    return new Date(arg0).toISOString()
+    return new Date(arg0).toLocaleDateString() + " " + new Date(arg0).toLocaleTimeString();
   }
   @Input() public event?: ShitEvent;
   @Input() public created: boolean = false;

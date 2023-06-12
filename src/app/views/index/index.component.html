@@ -9,9 +9,7 @@
       <div class="card-body">
         <ul>
           <!-- *ngFor="" -->
-          <ng-component>
-            <li>Event</li>
-          </ng-component>
+          <li *ngFor="let event of shownEvents">{{event.name}}</li>
         </ul>
       </div>
       <div class="card-footer p-0">
