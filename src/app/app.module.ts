@@ -40,9 +40,9 @@ import { GroupDisplayComponent } from './components/group-display/group-display.
       {path: "", redirectTo: "index", pathMatch: "full"},
       {path: "index", component: IndexComponent},
       {path: "test", component: TestComponent},
-      {path: "list", component: OverviewComponent},
-      {path:"settings",component: UserSettingsComponent},
-      {path:"groups",component:GroupsComponent},
+      {path: "events", component: OverviewComponent},
+      {path: "settings",component: UserSettingsComponent},
+      {path: "groups",component:GroupsComponent},
       {path: "form", component: EventFormComponent}
     ]),
     HttpClientModule,

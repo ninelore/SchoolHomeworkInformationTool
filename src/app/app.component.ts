@@ -14,7 +14,7 @@ export class AppComponent implements OnInit {
   @ViewChild('drawer') public drawer: MatSidenav;
 
   menuItems = new Map<String, String>([
-    ["list", "Overview"],
+    ["events", "Overview"],
     ["groups","Groups"],
     ["settings","Settings"]
   ]);
