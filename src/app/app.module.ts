@@ -4,7 +4,6 @@ import { RouterModule} from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { OverviewComponent } from './views/overview/overview.component';
-import { TestComponent } from './views/test/test.component';
 import { EventDisplayComponent } from './components/event-display/event-display.component';
 import { SubcriptionModalComponent } from './components/subscription-modal/subcription-modal.component';
 import { EventFormComponent } from './views/event-form/event-form.component';
@@ -25,7 +24,6 @@ import { EditGroupModalComponent } from './components/edit-group-modal/edit-grou
   declarations: [
     AppComponent,
     OverviewComponent,
-    TestComponent,
     SubcriptionModalComponent,
     EventDisplayComponent,
     EventFormComponent,
@@ -41,7 +39,6 @@ import { EditGroupModalComponent } from './components/edit-group-modal/edit-grou
     RouterModule.forRoot([
       {path: "", redirectTo: "index", pathMatch: "full"},
       {path: "index", component: IndexComponent},
-      {path: "test", component: TestComponent},
       {path: "events", component: OverviewComponent},
       {path: "settings",component: UserSettingsComponent},
       {path: "groups",component:GroupsComponent},
