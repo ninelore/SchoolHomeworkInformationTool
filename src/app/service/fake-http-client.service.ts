@@ -26,15 +26,41 @@ export class FakeHttpClientService implements HttpClientInterface {
     throw new Error('Method not implemented.');
   }
   getGroups(): Observable<Group[]> {
-    throw new Error('Method not implemented.');
+    return new Observable<Group[]>((observer) => {
+      observer.next(this.groups);
+    })
   }
   createGroup(group: Group): Observable<ShitServerResponse> {
-    throw new Error('Method not implemented.');
+    const rnd = Math.random();
+    this.groups.push({
+      id: this.groupCounter++,
+      name: "Random Group " + rnd,
+      ownerUserId: this.fakeUSerId,
+      discordGuidId: 0,
+      discordNotifyChannelId: 0
+    })
+    return new Observable<ShitServerResponse>((observer) => {
+      observer.next({
+        status: "success",
+        data: {}
+      });
+    })
+
   }
 
   private fakeUSerId = 1337;
-  private eventCounter = 0;
+  private eventCounter = 2;
   private subscriptionCounter = 0;
+  private groupCounter = -1;
+  private groups: Group[] = [
+    {
+      id: 0,
+      name: "Group 1",
+      ownerUserId: this.fakeUSerId,
+      discordGuidId: 0,
+      discordNotifyChannelId: 0
+    }
+  ]
   private events: ShitEvent[] = [
     {
       id: 0,
@@ -108,7 +134,7 @@ export class FakeHttpClientService implements HttpClientInterface {
     })
 
   }
-  
+
   unsubscribe(subscription: EventSubscription): Observable<ShitServerResponse> {
     this.subscrtions = this.subscrtions.filter(
       (s) => s.id !== subscription.id
