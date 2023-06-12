@@ -4,7 +4,6 @@
   "configurations": [
     {
       "name": "ng serve",
-      "runtimeExecutable": "/usr/bin/chromium",
       "type": "chrome",
       "request": "launch",
       "preLaunchTask": "npm: start",
