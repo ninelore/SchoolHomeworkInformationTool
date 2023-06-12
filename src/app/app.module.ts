@@ -19,6 +19,7 @@ import { GroupsComponent } from './views/groups/groups.component';
 import { IndexComponent } from './components/index/index.component';
 import { CreateEventModalComponent } from './components/create-event-modal/create-event-modal.component';
 import { GroupDisplayComponent } from './components/group-display/group-display.component';
+import { EditGroupModalComponent } from './components/edit-group-modal/edit-group-modal.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { GroupDisplayComponent } from './components/group-display/group-display.
     GroupsComponent,
     IndexComponent,
     CreateEventModalComponent,
-    GroupDisplayComponent
+    GroupDisplayComponent,
+    EditGroupModalComponent
   ],
   imports: [
     BrowserModule,

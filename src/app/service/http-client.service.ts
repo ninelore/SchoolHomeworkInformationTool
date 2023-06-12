@@ -38,6 +38,7 @@ export class HttpClientService implements HttpClientInterface {
 
 
 
+
   private get<C>(url: string) {
     return this.http.get<C>(url)
   }
@@ -130,6 +131,21 @@ export class HttpClientService implements HttpClientInterface {
     return this.get(HttpClientService.getGroupsUrl + `/${user.id}`);
   }
   createGroup(group: Group): Observable<ShitServerResponse> {
+
+    const user = this.accountService.getUser();
+
+    if (!user || user.id === null) {
+      return new Observable<ShitServerResponse>((observer) => {
+        observer.next({
+          status: "error",
+          data: {
+            message: "User not logged in"
+          }
+        });
+      });
+    }
+    group.ownerUserId = user.id;
+
     return this.post(HttpClientService.createGroupUrl, group);
   }
 
@@ -144,6 +160,10 @@ export class HttpClientService implements HttpClientInterface {
   }
   addUserToGroup(gm: GroupMembership): Observable<ShitServerResponse> {
     return this.post(HttpClientService.addUserToGroupUrl, gm);
+  }
+
+  updateGroup(group: Group): Observable<ShitServerResponse> {
+    return this.post(HttpClientService.updateGroupUrl, group);
   }
 
 }

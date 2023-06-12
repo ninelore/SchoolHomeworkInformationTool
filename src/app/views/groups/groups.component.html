@@ -1,3 +1,4 @@
+<app-edit-group-modal [originalGroup]="selectedGroup" [onCreate]="onCreateGroupFn()" [onUpdate]="onUpdateGroupFn()" [onDelete]="onDeleteGroupFn()"></app-edit-group-modal>
 <div class="">
     <h1>Groups</h1>
     <div class="row d-flex mt-3 mx-1">
@@ -9,8 +10,8 @@
                 <th>Guild ID</th>
                 <th>Notify Channel</th>
             </thead>
-            <tr   class="col-2" *ngFor="let group of groups" group-row [group]="group"></tr>
+            <tr   class="col-2" *ngFor="let group of groups" group-row [group]="group" [onEdit]="onEditFn(group)"></tr>
         </table>
     </div>
-    <button class="btn btn-primary mt-3">Add Group</button>
+    <button class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#edit-group-modal" (click)="onAddGroup()">Add Group</button>
 </div>

@@ -3,4 +3,4 @@
 <td>{{group?.ownerUserId ?? "no owner"}}</td>
 <td>{{group?.discordGuidId ?? "no guid"}}</td>
 <td>{{group?.discordNotifyChannelId ?? "no channel"}}</td>
-<td><button class="btn btn-primary">{{(group?.id ?? -1) > 0 ? "Edit" : "Save"}}</button></td>
+<td><button class="btn btn-primary" data-bs-toggle="modal" (click)="onEdit()" data-bs-toggle="modal" data-bs-target="#edit-group-modal">{{(group?.id ?? -1) > 0 ? "Edit" : "Save"}}</button></td>
