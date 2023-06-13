@@ -25,8 +25,11 @@ export class EventFormComponent {
 
   updateDate($event: Event) {
     const tartget = $event.target as HTMLInputElement;
-
-    this.event.date = tartget.valueAsDate?.toISOString();
+    const newDate = tartget.valueAsDate ?? new Date(tartget.valueAsNumber) ?? new Date(tartget.value) ?? null;
+    if(newDate === null){
+      throw new Error("Invalid date");
+    }
+    this.event.date = newDate.toISOString();
   }
 
   updateDescription($event: Event) {
