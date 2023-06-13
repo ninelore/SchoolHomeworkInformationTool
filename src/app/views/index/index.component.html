@@ -9,8 +9,11 @@
       <div class="card-body">
         <ul>
           <!-- *ngFor="" -->
-          <li *ngFor="let event of shownEvents">{{event.name}}</li>
+          <li class="mt-2 mx-4" *ngFor="let event of shownEvents">{{event.name}}  --  {{(parseDate(event?.date)) ?? "No Date"}}</li>
         </ul>
+        <div class="row mb-3">
+          <span *ngIf="shownEvents.length === 0" class="text-center text-secondary fs-5">No events</span>
+        </div>
       </div>
       <div class="card-footer p-0">
         <div class="d-grid">

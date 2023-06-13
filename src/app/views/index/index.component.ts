@@ -31,6 +31,13 @@ export class IndexComponent {
     )
   }
 
+  parseDate(arg0: string | undefined): string | undefined {
+    if (arg0 === undefined) {
+      return;
+    }
+    return new Date(arg0).toLocaleDateString() + " " + new Date(arg0).toLocaleTimeString();
+  }
+
   filterEvents() {
     const sorted = this.events.sort((a, b) => {
       return (a.date ?? new Date("1970-01-01")) > (b.date ?? new Date("1970-01-01")) ? 1 : 0
