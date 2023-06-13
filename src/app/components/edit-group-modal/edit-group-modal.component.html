@@ -6,37 +6,66 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div>Group name:</div>
-                <input type="text" class="form-control" value="{{editingGroup.name}}"
-                    (change)="onGroupNameChange($event)" />
-                <div>Group id: {{editingGroup.id}}</div>
-                <div>Guild Id:</div>
-                <input type="text" class="form-control" value="{{editingGroup.discordGuidId}}"
-                    (change)="onGuildIdChange($event)" />
-                <div>Notify channel:</div>
-                <input type="text" class="form-control" value="{{editingGroup.discordNotifyChannelId}}"
-                    (change)="onNotifyChannelChange($event)" />
-                <div>Group users:</div>
+                <div class="row g-2">
+                    <div class="col-12">
+                        <label for="editingGroupName">Group name</label>
+                        <input type="text" id="editingGroupName" class="form-control" value="{{editingGroup.name}}"
+                            (change)="onGroupNameChange($event)" />
+                    </div>
 
-                <div *ngFor="let user of finalUserList()" class="input-group">
-                    <div>{{user}}</div> <button class="btn btn-close" (click)="onRemoveUser(user)"></button>
+                    <div class="col-12">Group id: {{editingGroup.id}}</div>
+
+                    <div class="col-12">
+                        <label for="editingGroupDGID">Discord server ID <small class="text-secondary">(usually has 18-19
+                                digits)</small></label>
+                        <!-- Backlog ToDo: retrieve Guild via JDA and add Bot at the same time -->
+                        <input type="text" id="editingGroupDGID" class="form-control"
+                            value="{{editingGroup.discordGuidId}}" (change)="onGuildIdChange($event)" />
+                    </div>
+
+                    <div class="col-12">
+                        <label for="editingGroupDNID">Discord channel ID for Notifications <small
+                                class="text-secondary">(leave blank for no
+                                notifications)</small></label>
+                        <input type="text" id="editingGroupDNID" class="form-control"
+                            value="{{editingGroup.discordNotifyChannelId}}" (change)="onNotifyChannelChange($event)" />
+                    </div>
+
+                    <div class="col-12">
+                        <label for="editingGroupUsers">Group users</label>
+                        <div id="editingGroupUsers" class="row g-2">
+                            <div *ngFor="let user of finalUserList()" class=" input-group">
+                                <span class="input-group-text bg-secondary">{{user}}</span>
+                                <button class="btn btn-outline-primary" (click)="onRemoveUser(user)"><i
+                                        class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 input-group">
+                        <span class="input-group-text bg-secondary">User to add</span>
+                        <input type="text" class="form-control" value="" placeholder="Username"
+                            (change)="onUserNameChange($event)">
+                        <button class="btn btn-outline-primary" (click)="onAddUser($event)">Add User</button>
+                    </div>
+
+                    <div class="col-12">
+                        <button *ngIf="originalGroup" class="btn btn-danger" (click)="onDelete(editingGroup)">Delete
+                            Group</button>
+                    </div>
+                    
+                    <div class="row mt-3 g-2">
+                        <div class="col-6 d-grid">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                                (click)="onCancel(editingGroup)">Cancel</button>
+                        </div>
+                        <div class="col-6 d-grid">
+                            <!-- TODO only close on successfull save (orginalGroup?onUpdate(editingGroup):onCreate(editingGroup)) -->
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+                                (click)="((originalGroup?onUpdate(editingGroup,addedUsers,deletedUsers):onCreate(editingGroup,addedUsers)) )">{{(originalGroup?"Update":"Add")}}</button>
+                        </div>
+                    </div>
                 </div>
-
-                <div>
-                    <button class="btn btn-primary" (click)="onAddUser($event)">Add User</button><input type="text"
-                        value="" placeholder="Username" (change)="onUserNameChange($event)">
-                </div>
-
-
-                <button *ngIf="originalGroup" class="btn btn-danger" (click)="onDelete(editingGroup)">Delete
-                    Group</button>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
-                    (click)="onCancel(editingGroup)">Cancel</button>
-                <!-- TODO only close on successfull save (orginalGroup?onUpdate(editingGroup):onCreate(editingGroup)) -->
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                    (click)="((originalGroup?onUpdate(editingGroup,addedUsers,deletedUsers):onCreate(editingGroup,addedUsers)) )">{{(originalGroup?"Update":"Add")}}</button>
             </div>
         </div>
     </div>

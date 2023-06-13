@@ -34,7 +34,6 @@ export class EditGroupModalComponent {
 
   ngOnChanges(changes: SimpleChanges): void {
 
-
     if (changes["originalGroup"]?.currentValue === null || changes["originalUsers"]?.currentValue === null) {
       this.editingGroup = this.createDefaultGroup();
       this.addedUsers = this.createDefaultUsers();

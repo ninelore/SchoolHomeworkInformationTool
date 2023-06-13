@@ -8,11 +8,17 @@
             </div>
             <div class="modal-body">
                 <!-- add notifiy on event if first subscription-->
-                <app-event-form [event]="editedEvent" [groups]="groups" [onEventDelete]="deleteFn()"></app-event-form> 
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="cancel()">Cancel</button>
-                <button type="button" class="btn btn-primary" (click)="save()">{{(originalEvent?"Update":"Add")}}</button>
+                <app-event-form [event]="editedEvent" [groups]="groups" [onEventDelete]="deleteFn()"></app-event-form>
+                <div class="row mt-3 g-2">
+                    <div class="col-6 d-grid">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                            (click)="cancel()">Cancel</button>
+                    </div>
+                    <div class="col-6 d-grid">
+                        <button type="button" class="btn btn-primary"
+                            (click)="save()">{{(originalEvent?"Update":"Add")}}</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
