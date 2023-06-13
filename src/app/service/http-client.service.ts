@@ -40,6 +40,7 @@ export class HttpClientService implements HttpClientInterface {
 
 
 
+  
 
   private get<C>(url: string) {
     return this.http.get<C>(url)
@@ -98,6 +99,18 @@ export class HttpClientService implements HttpClientInterface {
         });
       });
     }
+
+    if(!isEventValid(event)){
+      return new Observable<ShitServerResponse>((observer) => {
+        observer.next({
+          status: "error",
+          data: {
+            message: "Invalid event"
+          }
+        });
+      })
+    }
+
     event.creatorId = user.id;
     return this.post<ShitServerResponse>(HttpClientService.createEventUrl, event);
   }
@@ -150,11 +163,22 @@ export class HttpClientService implements HttpClientInterface {
 
     return this.post(HttpClientService.createGroupUrl, group);
   }
-
   deleteEvent(event: ShitEvent): Observable<ShitServerResponse> {
     return this.delete(HttpClientService.deleteEventUrl + `/${event.id}`);
   }
   updateEvent(event: ShitEvent): Observable<ShitServerResponse> {
+
+    if(!isEventValid(event)){
+      return new Observable<ShitServerResponse>((observer) => {
+        observer.next({
+          status: "error",
+          data: {
+            message: "Invalid event"
+          }
+        });
+      })
+    }
+
     return this.post(HttpClientService.updateEventUrl, event);
   }
   deleteGroup(group: Group): Observable<ShitServerResponse> {
@@ -184,5 +208,11 @@ export class HttpClientService implements HttpClientInterface {
   addUserToGroupByName(gm: GroupMembership,name: string): Observable<ShitServerResponse> {
     return this.post(HttpClientService.addUserToGroupByNameUrl + `/${name}`, gm);
   }
+}
+
+function isEventValid(event: ShitEvent):boolean {
+
+  return !event.date
+
 }
 
