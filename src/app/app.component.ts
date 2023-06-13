@@ -16,7 +16,7 @@ export class AppComponent implements OnInit {
   menuItems = new Map<String, String>([
     ["events", "Overview"],
     ["groups","Groups"],
-    ["settings","Settings"]
+    //["settings","Settings"] // Backlog: Customize Username
   ]);
   breakpointObserver: any;
 
