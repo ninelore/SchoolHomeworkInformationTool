@@ -225,7 +225,7 @@ export class HttpClientService implements HttpClientInterface {
 
 function isEventValid(event: ShitEvent):boolean {
 
-  return !event.date
+  return event.date !== null;
 
 }
 
