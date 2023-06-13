@@ -40,7 +40,7 @@ export class FakeHttpClientService implements HttpClientInterface {
       id: this.groupCounter++,
       name: "Random Group " + rnd,
       ownerUserId: this.fakeUSerId,
-      discordGuidId: 0,
+      discordGuildId: 0,
       discordNotifyChannelId: 0
     })
     return new Observable<ShitServerResponse>((observer) => {
@@ -63,7 +63,7 @@ export class FakeHttpClientService implements HttpClientInterface {
       id: 0,
       name: "Group 1",
       ownerUserId: this.fakeUSerId,
-      discordGuidId: 0,
+      discordGuildId: 0,
       discordNotifyChannelId: 0
     }
   ]

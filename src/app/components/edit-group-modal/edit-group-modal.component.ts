@@ -45,7 +45,7 @@ export class EditGroupModalComponent {
       const crr = changes["originalGroup"].currentValue;
       this.editingGroup.id = crr.id;
       this.editingGroup.name = crr.name;
-      this.editingGroup.discordGuidId = crr.discordGuidId;
+      this.editingGroup.discordGuildId = crr.discordGuildId;
       this.editingGroup.discordNotifyChannelId = crr.discordNotifyChannelId;
       this.addedUsers = this.createDefaultUsers();
       this.deletedUsers = [];
@@ -56,7 +56,7 @@ export class EditGroupModalComponent {
 
   createDefaultGroup(): Group {
     return {
-      discordGuidId: 0,
+      discordGuildId: 0,
       name: "",
       discordNotifyChannelId: 0,
       id: null,
@@ -88,7 +88,7 @@ export class EditGroupModalComponent {
   }
 
   onGuildIdChange($event: Event): void {
-    this.editingGroup.discordGuidId = parseInt((<HTMLInputElement>$event.target).value);
+    this.editingGroup.discordGuildId = parseInt((<HTMLInputElement>$event.target).value);
   }
 
   onNotifyChannelChange($event: Event): void {
