@@ -3,6 +3,7 @@ import { ShitEvent } from "../models/shit-event";
 import { EventSubscription } from "../models/event-subscription";
 import { Group } from "../models/group";
 import { GroupMembership } from "../models/group-membership";
+import { User } from "../models/user";
 
 export interface ShitServerResponse {
     status: string;
@@ -30,6 +31,7 @@ export interface HttpClientInterface {
     addUserToGroupByName(gm: GroupMembership,name: string):  Observable<ShitServerResponse>;
     // addUserToGroup
     addUserToGroup(group: GroupMembership): Observable<ShitServerResponse>;
+    getGroupMembers(grouId: number):Observable<User[]>;
 
 
     // getUserInfo

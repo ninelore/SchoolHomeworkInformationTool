@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { forkJoin } from 'rxjs';
 import { Group } from 'src/app/models/group';
+import { User } from 'src/app/models/user';
 import { HttpClientService } from 'src/app/service/http-client.service';
 
 @Component({
@@ -13,7 +14,7 @@ export class GroupsComponent implements OnInit {
   public groups: Group[] = []
 
   selectedGroup: Group | null = null;
-  selectedUsers: string[] = [];
+  selectedUsers: User[] = [];
 
   constructor(private backend: HttpClientService) {
     this.refresh();
@@ -73,7 +74,16 @@ export class GroupsComponent implements OnInit {
     }
   }
 
-
+  OnChanges(changes: SimpleChanges): void {
+    if (changes["selectedGroup"] && changes["selectedGroup"].currentValue){
+      const id = (changes["selectedGroup"].currentValue as Group).id;
+      if (id != null) {
+        this.backend.getGroupMembers(id).subscribe(users => {
+          this.selectedUsers = users;
+        });
+      }
+    }
+  }
 
   ngOnInit(): void {
 

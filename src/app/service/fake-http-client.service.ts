@@ -5,11 +5,15 @@ import { ShitEvent } from '../models/shit-event';
 import { EventSubscription } from '../models/event-subscription';
 import { Group } from '../models/group';
 import { GroupMembership } from '../models/group-membership';
+import { User } from '../models/user';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FakeHttpClientService implements HttpClientInterface {
+  getGroupMembers(grouId: number): Observable<User[]> {
+    throw new Error('Method not implemented.');
+  }
   addUserToGroupByName(gm: GroupMembership, name: string): Observable<ShitServerResponse> {
     throw new Error('Method not implemented.');
   }

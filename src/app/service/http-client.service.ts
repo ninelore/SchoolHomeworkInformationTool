@@ -8,6 +8,7 @@ import { AccountService } from './account.service';
 import { environment } from '../../environments/environment';
 import { Group } from '../models/group';
 import { GroupMembership } from '../models/group-membership';
+import { User } from '../models/user';
 
 @Injectable({
   providedIn: 'root'
@@ -26,9 +27,11 @@ export class HttpClientService implements HttpClientInterface {
   private static readonly deleteSubscriptionUrl = HttpClientService.basePath + "/deleteEventSubscription"
 
   private static readonly getGroupsUrl = HttpClientService.basePath + "/getGroups"
+  private static readonly getGroupMembersUrl = HttpClientService.basePath + "/getGroupMembers"
   private static readonly createGroupUrl = HttpClientService.basePath + "/createGroup"
   private static readonly deleteGroupUrl = HttpClientService.basePath + "/deleteGroup"
   private static readonly updateGroupUrl = HttpClientService.basePath + "/editGroup"
+
 
   private static readonly addUserToGroupUrl = HttpClientService.basePath + "/createGroupMembership"
   private static readonly addUserToGroupByNameUrl = HttpClientService.basePath + "/createGroupMembershipByName"
@@ -37,10 +40,6 @@ export class HttpClientService implements HttpClientInterface {
 
 
   constructor(private http: HttpClient, private accountService: AccountService) { }
-
-
-
-  
 
   private get<C>(url: string) {
     return this.http.get<C>(url)
@@ -83,6 +82,12 @@ export class HttpClientService implements HttpClientInterface {
     }
 
     return this.get<ShitEvent[]>(HttpClientService.getEventUrl + `/${user.id}`);
+  }
+
+  getGroupMembers(grouId: number): Observable<User[]> {
+
+    return this.get(HttpClientService.getGroupMembersUrl + `/${grouId}`)
+
   }
 
   public createEvent(event: ShitEvent): Observable<ShitServerResponse> {
