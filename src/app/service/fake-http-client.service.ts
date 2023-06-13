@@ -11,6 +11,9 @@ import { User } from '../models/user';
   providedIn: 'root'
 })
 export class FakeHttpClientService implements HttpClientInterface {
+  deleteGroupMembers(group: Group, users: User[]): Observable<ShitServerResponse> {
+    throw new Error('Method not implemented.');
+  }
   getGroupMembers(grouId: number): Observable<User[]> {
     throw new Error('Method not implemented.');
   }

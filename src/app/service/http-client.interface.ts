@@ -31,6 +31,7 @@ export interface HttpClientInterface {
     addUserToGroupByName(gm: GroupMembership,name: string):  Observable<ShitServerResponse>;
     // addUserToGroup
     addUserToGroup(group: GroupMembership): Observable<ShitServerResponse>;
+    deleteGroupMembers(group:Group, users:User[]): Observable<ShitServerResponse>;
     getGroupMembers(grouId: number):Observable<User[]>;
 
 

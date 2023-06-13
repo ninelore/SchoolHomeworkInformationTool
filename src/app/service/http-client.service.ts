@@ -35,11 +35,12 @@ export class HttpClientService implements HttpClientInterface {
 
   private static readonly addUserToGroupUrl = HttpClientService.basePath + "/createGroupMembership"
   private static readonly addUserToGroupByNameUrl = HttpClientService.basePath + "/createGroupMembershipByName"
-
-  private static readonly removeUserFromGroupUrl = HttpClientService.basePath + "/deleteGroupMembership"
+  
+  private static readonly deleteGroupMembers = HttpClientService.basePath + "/deleteGroupMembers"
 
 
   constructor(private http: HttpClient, private accountService: AccountService) { }
+
 
   private get<C>(url: string) {
     return this.http.get<C>(url)
@@ -213,6 +214,13 @@ export class HttpClientService implements HttpClientInterface {
   addUserToGroupByName(gm: GroupMembership,name: string): Observable<ShitServerResponse> {
     return this.post(HttpClientService.addUserToGroupByNameUrl + `/${name}`, gm);
   }
+
+  deleteGroupMembers(group: Group, users: User[]): Observable<ShitServerResponse> {
+
+    return this.post(HttpClientService.deleteGroupMembers + `/${group.id}`, users.map(u => u.id))
+
+  }
+
 }
 
 function isEventValid(event: ShitEvent):boolean {

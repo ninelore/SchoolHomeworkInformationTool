@@ -1,5 +1,6 @@
 import { Component, Input, SimpleChanges } from '@angular/core';
 import { Group } from 'src/app/models/group';
+import { User } from 'src/app/models/user';
 
 @Component({
   selector: 'app-edit-group-modal',
@@ -10,16 +11,16 @@ export class EditGroupModalComponent {
   @Input() public onCancel: (group: Group) => void = (group: Group) => { };
   @Input() public onDelete: (group: Group) => void = (group: Group) => { };
   @Input() public onCreate: (group: Group, users: string[]) => void = (group: Group) => { };
-  @Input() public onUpdate: (group: Group,addedUsers: string[], deletedUsers: string[]) => void = (group: Group) =>  { };
+  @Input() public onUpdate: (group: Group, addedUsers: string[], deletedUsers: User[]) => void = (group: Group) => { };
 
   @Input() public originalGroup: Group | null = null;
-  @Input() public originalUsers: string[] = []
+  @Input() public originalUsers: User[] = []
 
   userNameInput: string;
 
   editingGroup: Group = this.createDefaultGroup();
   addedUsers: string[] = this.createDefaultUsers();
-  deletedUsers: string[] = [];
+  deletedUsers: User[] = [];
   constructor() {
     this.editingGroup = this.createDefaultGroup()
   }
@@ -29,7 +30,19 @@ export class EditGroupModalComponent {
   }
 
   finalUserList() {
-    return [...this.addedUsers, ...this.originalUsers].filter(user=> this.deletedUsers.indexOf(user) === -1).filter((user, index, self) => self.indexOf(user) === index);
+    const deletedUserIds = this.deletedUsers.map(user => user.id)
+    const added = this.addedUsers.map<User>(userName => (
+      {
+        id: null,
+        discordId: 0,
+        email: "",
+        name: userName,
+        token: ""
+      } as User)
+    )
+    const unfiltered = [...added, ...this.originalUsers]
+    const filtered = unfiltered.filter(user => deletedUserIds.indexOf(user.id) === -1);
+    return filtered.map(user => user.name)
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -76,11 +89,13 @@ export class EditGroupModalComponent {
     this.addedUsers.push(this.userNameInput)
   }
 
-  onRemoveUser(user: string) {
-    if (this.deletedUsers.includes(user) || user.trim().length === 0) {
+  onRemoveUser(userName: string) {
+    if (this.deletedUsers.map(user => user.name).includes(userName) || userName.trim().length === 0) {
       return;
     }
-    this.deletedUsers.push
+    const userE = this.originalUsers.find(user => user.name === userName);
+    if (userE)
+      this.deletedUsers.push(userE)
   }
 
   onGroupNameChange($event: Event): void {

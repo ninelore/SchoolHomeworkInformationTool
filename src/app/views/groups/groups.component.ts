@@ -20,6 +20,7 @@ export class GroupsComponent implements OnInit {
     this.refresh();
   }
 
+
   refresh() {
     this.backend.getGroups().subscribe(
       groups => this.groups = groups
@@ -35,18 +36,19 @@ export class GroupsComponent implements OnInit {
   }
 
   onUpdateGroupFn() {
-    return (group: Group, addedUsers: string[], deletedUsers: string[]) => {
+    return (group: Group, addedUsers: string[], deletedUsers: User[]) => {
 
       // group invalid
-      if(group.id === null) {
+      if (group.id === null) {
         this.refresh()
 
         return
       }
 
-      forkJoin([  
+      forkJoin([
         this.backend.updateGroup(group),
-        ...addedUsers.map(user => this.backend.addUserToGroupByName({ groupId: group.id as number, id: null, userId: -1 }, user))
+        ...addedUsers.map(user => this.backend.addUserToGroupByName({ groupId: group.id as number, id: null, userId: -1 }, user)),
+        this.backend.deleteGroupMembers(group, deletedUsers)
       ]).subscribe(
         () => this.refresh()
       )
@@ -65,25 +67,29 @@ export class GroupsComponent implements OnInit {
   }
 
   onAddGroup() {
-    this.selectedGroup = null
+    this.selectGroup(null);
+
+  }
+
+  selectGroup(group: Group | null) {
+    this.selectedGroup = group
+
+    const id = group?.id ?? null;
+    if (id != null) {
+      this.backend.getGroupMembers(id).subscribe(users => {
+        this.selectedUsers = users ?? [];
+      });
+    }
+
   }
 
   onEditFn(group: Group) {
     return () => {
-      this.selectedGroup = group
+      this.selectGroup(group);
     }
   }
 
-  OnChanges(changes: SimpleChanges): void {
-    if (changes["selectedGroup"] && changes["selectedGroup"].currentValue){
-      const id = (changes["selectedGroup"].currentValue as Group).id;
-      if (id != null) {
-        this.backend.getGroupMembers(id).subscribe(users => {
-          this.selectedUsers = users;
-        });
-      }
-    }
-  }
+
 
   ngOnInit(): void {
 
