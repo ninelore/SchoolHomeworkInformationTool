@@ -69,9 +69,9 @@ export class EditGroupModalComponent {
 
   createDefaultGroup(): Group {
     return {
-      discordGuildId: 0,
+      discordGuildId: "",
       name: "",
-      discordNotifyChannelId: 0,
+      discordNotifyChannelId: "",
       id: null,
       ownerUserId: -1
     }
@@ -103,11 +103,11 @@ export class EditGroupModalComponent {
   }
 
   onGuildIdChange($event: Event): void {
-    this.editingGroup.discordGuildId = parseInt((<HTMLInputElement>$event.target).value);
+    this.editingGroup.discordGuildId = ((<HTMLInputElement>$event.target).value);
   }
 
   onNotifyChannelChange($event: Event): void {
-    this.editingGroup.discordNotifyChannelId = parseInt((<HTMLInputElement>$event.target).value);
+    this.editingGroup.discordNotifyChannelId = ((<HTMLInputElement>$event.target).value);
   }
 
 }

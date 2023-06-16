@@ -47,8 +47,8 @@ export class FakeHttpClientService implements HttpClientInterface {
       id: this.groupCounter++,
       name: "Random Group " + rnd,
       ownerUserId: this.fakeUSerId,
-      discordGuildId: 0,
-      discordNotifyChannelId: 0
+      discordGuildId: "",
+      discordNotifyChannelId: ""
     })
     return new Observable<ShitServerResponse>((observer) => {
       observer.next({
@@ -70,8 +70,8 @@ export class FakeHttpClientService implements HttpClientInterface {
       id: 0,
       name: "Group 1",
       ownerUserId: this.fakeUSerId,
-      discordGuildId: 0,
-      discordNotifyChannelId: 0
+      discordGuildId: "",
+      discordNotifyChannelId: ""
     }
   ]
   private events: ShitEvent[] = [
